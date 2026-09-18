@@ -66,34 +66,11 @@
     </div>
   </section>
 
-  <section id="app"><h2>Your Rig, <em>Live</em></h2>
-    <p class="sec-sub">This is the app itself — devices, lighting, fans and library, running right here on this page.</p>
-    <h3 class="sub-h">Devices</h3><div class="cards" id="deviceCards"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
-    <h3 class="sub-h">Lighting — Forge Glow</h3>
-    <div class="panel2">
-      <div class="light-preview" id="lightPreview"></div>
-      <div class="light-ctrl">
-        <label>Color <input type="color" id="rgbPick" value="#ff0033"></label>
-        <label>Effect <select id="fx"><option>Static</option><option>Breathing</option><option>Strobing</option><option>Rainbow</option><option>Wave</option></select></label>
-        <label>Brightness <input type="range" id="bright" min="10" max="100" value="90"></label>
-        <div class="row"><button class="btn primary" id="applyFx">Apply to all</button><button class="btn" id="syncBtn">Sync devices</button></div>
-      </div>
-    </div>
-    <h3 class="sub-h">Fans</h3>
-    <div class="panel2">
-      <div class="fan-modes"><button class="btn mode active">Silent</button><button class="btn mode">Balanced</button><button class="btn mode">Turbo</button><button class="btn mode">Manual</button></div>
-      <div id="fanSliders"></div><canvas id="curve" width="520" height="160"></canvas>
-    </div>
-    <h3 class="sub-h">Game Library</h3><div class="cards" id="gameCards"></div>
-  </section>
-
   <section id="download"><h2>Download</h2>
     <p class="sec-sub">Free. No account needed to look around — sign in only for cloud sync.</p>
     <div class="dltable">
       <div class="dlrow dlhead"><span>Package</span><span>Version</span><span>Size</span><span></span></div>
-      <div class="dlrow"><span><b>Forge Control Web</b><small>runs here, nothing to install</small></span><span>v1.0</span><span>—</span><span><button class="btn primary" id="dlApp">⬇ Open App</button></span></div>
-      <div class="dlrow"><span><b>My Config (JSON)</b><small>devices, fans, lighting</small></span><span>v1.0</span><span>~4 KB</span><span><button class="btn" id="exportBtn">⬇ Download</button></span></div>
-      <div class="dlrow"><span><b>Source Code</b><small>GitHub, MIT licensed</small></span><span>main</span><span>—</span><span><button class="btn" onclick="window.open('https://github.com/FORGESTUDIO-303/forge-control','_blank')">GitHub</button></span></div>
+      <div class="dlrow"><span><b>Source Code</b><small>GitHub, MIT licensed</small></span><span>main</span><span>—</span><span><button class="btn primary" id="dlApp">⬇ GitHub</button></span></div>
     </div>
   </section>
 
@@ -102,11 +79,11 @@
     <div class="steps">
       <div class="step"><span>1</span><div><h4>Open the app</h4><p>No installer — it runs right here on this page. Scroll to <a href="#app">Your Rig, Live</a> and everything is already loaded.</p></div></div>
       <div class="step"><span>2</span><div><h4>Sign in to sync</h4><p>Hit Google or GitHub login up top. Your setup syncs to the cloud so it follows you between machines.</p></div></div>
-      <div class="step"><span>3</span><div><h4>Check your devices</h4><p>Your device cards load from the cloud automatically. Hit Configure on any card to manage it.</p></div></div>
+      <div class="step"><span>3</span><div><h4>Add your devices</h4><p>Sign in and register your rig — motherboard, GPU, keyboard, mouse, headset. Everything appears in your device hub.</p></div></div>
       <div class="step"><span>4</span><div><h4>Set your glow</h4><p>Pick a color and effect in Forge Glow, then Apply to all. Watch the preview strip — that's exactly what your rig gets.</p></div></div>
       <div class="step"><span>5</span><div><h4>Tune your fans</h4><p>Start with Balanced. Gaming hard? Switch to Turbo. Working late? Silent. The curve canvas shows the result live.</p></div></div>
       <div class="step"><span>6</span><div><h4>Build your library</h4><p>Hit Optimize on a game card for a tuned profile, Launch when you're ready to play.</p></div></div>
-      <div class="step"><span>7</span><div><h4>Back it up</h4><p>Download your config JSON from the Download section. Re-import anytime — your rig, your rules.</p></div></div>
+      <div class="step"><span>7</span><div><h4>Grab the source</h4><p>Everything is MIT licensed on GitHub. Clone it, self-host it, make it yours — your rig, your rules.</p></div></div>
     </div>
   </section>
 
@@ -140,7 +117,6 @@
 
 </div>
 </div>
-<div class="top-search"><input id="search" placeholder="Search devices, games…"></div>
 <div id="toast"></div>
 <script src="config.js"></script>
 <script src="app.js"></script>
