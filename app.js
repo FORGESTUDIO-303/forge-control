@@ -14,15 +14,14 @@ function setStatus(online) {
   const hero = document.getElementById('heroStatus');
   const foot = document.getElementById('footStatus');
   const hs = document.getElementById('heroStatusTxt');
-  const badge = document.getElementById('gpuBadge');
   if (online) {
     pill.textContent = '● Live'; pill.classList.add('live'); pill.classList.remove('off');
-    hero.classList.add('on'); hs.textContent = 'Forge Cloud connected';
-    foot.textContent = 'all systems live'; badge.textContent = 'Cloud synced';
+    hero.classList.add('on'); hs.textContent = 'Welcome to Forge Control';
+    foot.textContent = 'all systems live';
   } else {
-    pill.textContent = '● Connecting…'; pill.classList.add('off'); pill.classList.remove('live');
-    hs.textContent = 'Connecting to Forge Cloud…';
-    foot.textContent = 'connecting…'; badge.textContent = 'Syncing…';
+    pill.textContent = 'Forge Control'; pill.classList.remove('off'); pill.classList.remove('live');
+    hs.textContent = 'Welcome to Forge Control';
+    foot.textContent = 'v1.0';
   }
 }
 
