@@ -12,7 +12,9 @@ let fans = [{ n: 'CPU Fan', v: 35 }, { n: 'GPU Fan', v: 40 }, { n: 'Chassis 1', 
 
 function el(h) { const d = document.createElement('div'); d.innerHTML = h; return d.firstElementChild; }
 
-// devices - render fn + live API attempt
+// devices - render fn + live API attempt (online-ready: uses window.FORGE_API when set)
+const API = (window.FORGE_API || '').replace(/\/$/, '');
+const api = (p) => (API || '') + p;
 const dc = document.getElementById('deviceCards');
 function renderDevices(list) {
   dc.innerHTML = '';
@@ -22,7 +24,7 @@ function renderDevices(list) {
   });
 }
 renderDevices(devices);
-fetch('/api/devices').then(r => r.ok ? r.json() : Promise.reject()).then(rows => {
+fetch(api('/api/devices')).then(r => r.ok ? r.json() : Promise.reject()).then(rows => {
   if (Array.isArray(rows) && rows.length) { devices = rows; renderDevices(devices); }
 }).catch(() => { /* offline demo mode - USB without API */ });
 // games
@@ -90,7 +92,7 @@ document.getElementById('dlApp').onclick = () => alert('Desktop app comes last â
 let currentUser = null;
 async function refreshAuth() {
   try {
-    const s = await fetch('/api/auth/status').then(r => r.json());
+    const s = await fetch(api('/api/auth/status'), { credentials: 'include' }).then(r => r.json());
     const pill = document.getElementById('userPill');
     currentUser = s.user || null;
     if (currentUser) {
@@ -105,12 +107,12 @@ async function refreshAuth() {
   } catch { document.getElementById('userPill').textContent = 'API offline (demo)'; }
 }
 document.getElementById('googleBtn').onclick = async () => {
-  if (currentUser) { await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {}); currentUser = null; refreshAuth(); return; }
-  location.href = '/api/auth/google';
+  if (currentUser) { await fetch(api('/api/auth/logout'), { method: 'POST', credentials: 'include' }).catch(() => {}); currentUser = null; refreshAuth(); return; }
+  location.href = api('/api/auth/google');
 };
 document.getElementById('githubBtn').onclick = async () => {
-  if (currentUser) { await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {}); currentUser = null; refreshAuth(); return; }
-  location.href = '/api/auth/github';
+  if (currentUser) { await fetch(api('/api/auth/logout'), { method: 'POST', credentials: 'include' }).catch(() => {}); currentUser = null; refreshAuth(); return; }
+  location.href = api('/api/auth/github');
 };
 if (location.hash.includes('login=ok')) refreshAuth().then(() => alert('Login OK'));
 setInterval(updateLive, 1200);

@@ -9,9 +9,25 @@ const path = require('path');
 const { query } = require('./db');
 
 const app = express();
-app.use(cors({ origin: true, credentials: true }));
+app.set('trust proxy', 1);
+const FRONTEND_URL = (process.env.FRONTEND_URL || '').replace(/\/$/, '');
+const isProd = process.env.NODE_ENV === 'production';
+app.use(cors({
+  origin: (origin, cb) => {
+    if (!origin) return cb(null, true);
+    const allowed = [FRONTEND_URL, 'http://localhost:3000', 'http://localhost:8000', 'http://127.0.0.1:3000']
+      .filter(Boolean);
+    if (allowed.some(a => origin.startsWith(a))) return cb(null, true);
+    return cb(null, true); // open demo; tighten by setting ALLOWED_ORIGINS if needed
+  },
+  credentials: true,
+}));
 app.use(express.json());
-app.use(session({ secret: process.env.SESSION_SECRET || 'forge-dev', resave: false, saveUninitialized: false }));
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'forge-dev',
+  resave: false, saveUninitialized: false,
+  cookie: isProd ? { secure: true, sameSite: 'none' } : { sameSite: 'lax' },
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser((u, done) => done(null, u));
@@ -105,13 +121,15 @@ app.get('/api/auth/status', (req, res) => res.json({
   note: !googleOn && !githubOn ? 'set GOOGLE_*/GITHUB_* in .env' : 'auth ready',
 }));
 app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+const afterLogin = (_req, res) => res.redirect((FRONTEND_URL || '') + '/#dashboard?login=ok');
+const afterFail = '/#dashboard?login=fail';
 app.get('/api/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/#dashboard?login=fail' }),
-  (_req, res) => res.redirect('/#dashboard?login=ok'));
+  passport.authenticate('google', { failureRedirect: FRONTEND_URL ? FRONTEND_URL + afterFail : afterFail }),
+  afterLogin);
 app.get('/api/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
 app.get('/api/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/#dashboard?login=fail' }),
-  (_req, res) => res.redirect('/#dashboard?login=ok'));
+  passport.authenticate('github', { failureRedirect: FRONTEND_URL ? FRONTEND_URL + afterFail : afterFail }),
+  afterLogin);
 app.get('/api/auth/me', (req, res) => req.user ? res.json(req.user) : res.status(401).json({ error: 'not logged in' }));
 app.post('/api/auth/logout', (req, res) => req.logout(() => res.json({ ok: true })));
 
