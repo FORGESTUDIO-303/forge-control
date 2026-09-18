@@ -19,8 +19,8 @@
       <a href="#settings">Settings</a>
     </nav>
     <div class="side-foot">
-      <div class="ver">v0.1.0 • portable • A:\forge-control</div>
-      <button id="dlApp" class="btn primary">Download App</button>
+      <div class="ver" id="sideStatus"><span class="live-dot"></span><span id="sideStatusTxt">v1.0 • connecting…</span></div>
+      <button id="dlApp" class="btn primary">⬇ Download</button>
     </div>
   </aside>
 
@@ -28,8 +28,7 @@
     <header class="topbar">
       <input id="search" placeholder="Search devices, games, settings…">
       <div class="auth-row">
-        <span class="pill">DB: Neon live</span>
-        <span class="pill">API: live</span>
+        <span class="pill" id="apiPill">● Connecting…</span>
         <button id="googleBtn" class="btn">Google login</button>
         <button id="githubBtn" class="btn">GitHub login</button>
         <span id="userPill" class="pill">not logged in</span>
@@ -38,13 +37,14 @@
 
     <section class="hero" id="dashboard">
       <div>
+        <div class="status-line" id="heroStatus"><span class="live-dot"></span><span id="heroStatusTxt">Connecting to Forge Cloud…</span></div>
         <h1>FORGE <span>CONTROL</span></h1>
-        <p>One hub for monitoring, lighting, fans and games. Armoury-style control, rebuilt lighter and simpler.</p>
+        <p>One hub for monitoring, lighting, fans and games. Hand-built control center — fast, live and online.</p>
         <div class="hero-btns">
-          <button class="btn primary" onclick="document.getElementById('devices').scrollIntoView()">Explore devices</button>
-          <button class="btn" onclick="document.getElementById('lighting').scrollIntoView()">Try lighting</button>
+          <button class="btn primary big" id="heroDl">⬇ Download Forge Control</button>
+          <button class="btn big" onclick="document.getElementById('devices').scrollIntoView()">Explore devices</button>
         </div>
-        <div class="badges"><span>Original UI — inspired by, not copied from ASUS</span><span id="gpuBadge">GPU: detecting…</span></div>
+        <div class="badges"><span>Hand-built • no templates</span><span id="gpuBadge">Syncing…</span></div>
       </div>
       <div class="hero-card">
         <h3>SYSTEM LIVE</h3>
@@ -58,7 +58,7 @@
       </div>
     </section>
 
-    <section id="devices"><h2>Devices</h2><div class="cards" id="deviceCards"></div></section>
+    <section id="devices"><h2>Devices</h2><div class="cards" id="deviceCards"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div></section>
 
     <section id="lighting"><h2>Lighting — Forge Glow</h2>
       <div class="panel2">
@@ -92,20 +92,21 @@
 
     <section id="settings"><h2>Settings</h2>
       <div class="panel2 settings">
-        <label><input type="checkbox" checked> Start with Windows</label>
-        <label><input type="checkbox" checked> Portable mode (keep everything on A:)</label>
-        <label><input type="checkbox"> Share anonymous stats for ads/videos page</label>
+        <label><input type="checkbox" id="setNotif" checked> Notifications</label>
+        <label><input type="checkbox" id="setSync" checked> Cloud sync</label>
+        <label><input type="checkbox" id="setStats"> Share anonymous stats</label>
         <div class="row">
-          <button class="btn" id="exportBtn">Export config (JSON)</button>
-          <button class="btn" id="resetBtn">Reset demo</button>
+          <button class="btn primary" id="exportBtn">⬇ Download my config</button>
+          <button class="btn" id="resetBtn">Reset</button>
         </div>
-        <p class="note">DB + API live on Neon. Google login live — GitHub next, then desktop app.</p>
+        <p class="note">Signed in with Google or GitHub to sync lighting, fans and library across machines.</p>
       </div>
     </section>
 
-    <footer>Forge Control • original design • no ASUS assets • built for A: drive • videos/ads module paused</footer>
+    <footer>Forge Control • hand-built • <span id="footStatus">connecting…</span></footer>
   </div>
 </div>
+<div id="toast"></div>
 <script src="config.js"></script>
 <script src="app.js"></script>
 </body>
