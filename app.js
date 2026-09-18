@@ -25,24 +25,6 @@ function setStatus(online) {
   }
 }
 
-// hero live stats animation
-const spark = document.getElementById('spark').getContext('2d');
-let hist = Array(40).fill(20);
-function updateLive() {
-  const cpu = 25 + Math.random() * 40, gpu = 30 + Math.random() * 45;
-  document.getElementById('cpuVal').textContent = cpu.toFixed(0) + '%';
-  document.getElementById('gpuVal').textContent = gpu.toFixed(0) + '%';
-  document.getElementById('fanVal').textContent = (30 + Math.random() * 30).toFixed(0) + '%';
-  document.getElementById('tempVal').textContent = (45 + Math.random() * 20).toFixed(0) + '°C';
-  hist.push(cpu); hist.shift();
-  spark.clearRect(0, 0, 320, 90);
-  const g = spark.createLinearGradient(0, 0, 320, 0);
-  g.addColorStop(0, '#ff0033'); g.addColorStop(1, '#d4af37');
-  spark.strokeStyle = g; spark.lineWidth = 2.5; spark.beginPath();
-  hist.forEach((v, i) => { const x = i * 8, y = 82 - v; i ? spark.lineTo(x, y) : spark.moveTo(x, y); });
-  spark.stroke();
-}
-
 // downloads -> source
 document.getElementById('dlApp').onclick = () => window.open(REPO, '_blank');
 document.getElementById('heroDl').onclick = () => window.open(REPO, '_blank');
@@ -50,7 +32,7 @@ document.getElementById('resetBtn').onclick = () => toast('Settings reset');
 
 // scroll reveal + nav spy
 const io = new IntersectionObserver(es => es.forEach(x => x.isIntersecting && x.target.classList.add('vis')), { threshold: 0.12 });
-document.querySelectorAll('section, .hero-card').forEach(s => { s.classList.add('reveal'); io.observe(s); });
+document.querySelectorAll('section').forEach(s => { s.classList.add('reveal'); io.observe(s); });
 const links = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
   let cur = 'top';
@@ -89,5 +71,4 @@ document.getElementById('githubBtn').onclick = async () => {
 };
 if (location.hash.includes('login=ok')) toast('Welcome back ✓');
 
-setInterval(updateLive, 1200);
-updateLive(); refreshAuth();
+refreshAuth();
