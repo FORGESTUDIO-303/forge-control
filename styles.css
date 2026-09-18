@@ -76,7 +76,6 @@ section h2{letter-spacing:2px;font-size:18px;border-left:4px solid var(--red);pa
 .row{display:flex;gap:8px;flex-wrap:wrap}
 .fan-modes{display:flex;gap:8px;margin-bottom:13px;flex-wrap:wrap}
 .fan-modes .active{border-color:var(--red);color:#fff;box-shadow:var(--glow)}
-#fanSliders{display:grid;gap:9px;margin-bottom:13px}
 .fan-row{display:grid;grid-template-columns:120px 1fr 80px;gap:10px;align-items:center;background:var(--panel2);padding:9px 12px;border-radius:9px;transition:.2s}
 .fan-row:hover{border:1px solid var(--line)}
 .fan-row input[type=range]{accent-color:var(--red)}
