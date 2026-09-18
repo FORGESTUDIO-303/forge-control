@@ -28,7 +28,9 @@ function setStatus(online) {
 // downloads -> source
 document.getElementById('dlApp').onclick = () => window.open(REPO, '_blank');
 document.getElementById('heroDl').onclick = () => window.open(REPO, '_blank');
-document.getElementById('resetBtn').onclick = () => toast('Settings reset');
+// hamburger menu
+const side = document.querySelector('.sidebar');
+document.getElementById('menuBtn').onclick = () => side.classList.toggle('open');
 
 // scroll reveal + nav spy
 const io = new IntersectionObserver(es => es.forEach(x => x.isIntersecting && x.target.classList.add('vis')), { threshold: 0.12 });
@@ -39,7 +41,7 @@ window.addEventListener('scroll', () => {
   document.querySelectorAll('section[id]').forEach(s => { if (scrollY >= s.offsetTop - 140) cur = s.id; });
   links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
 });
-document.querySelectorAll('.sidebar nav a').forEach(a => a.addEventListener('click', () => toast(a.textContent)));
+document.querySelectorAll('.sidebar nav a').forEach(a => a.addEventListener('click', () => { side.classList.remove('open'); toast(a.textContent); }));
 
 // auth - needs the API backend; probe it before redirecting to login
 let apiUp = false;
