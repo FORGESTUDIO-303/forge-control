@@ -11,19 +11,18 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<button id="menuBtn" aria-label="Menu">☰</button>
-<div class="app" id="top">
-  <aside class="sidebar">
-    <a class="logo" href="#top" style="text-decoration:none;color:inherit"><span class="logo-mark">F</span>FORGE<span class="thin">CONTROL</span></a>
-    <nav>
-      <a href="#top" class="active">Home</a>
-      <a href="#features">Features</a>
-    </nav>
-    <div class="side-foot">
-      <span class="pill">v1.0 • Free</span>
-      <button id="dlApp" class="btn primary">⬇ GitHub</button>
-    </div>
-  </aside>
+<nav class="topnav" id="top">
+  <a class="brand" href="#top"><span class="logo-mark">F</span>FORGE<span class="thin">CONTROL</span></a>
+  <div class="nav-links">
+    <a href="#top" class="active">Home</a>
+    <a href="#about">About</a>
+    <a href="#features">Features</a>
+    <a href="#download">Download</a>
+    <a href="#guide">Guide</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <button id="dlApp" class="btn primary">⬇ GitHub</button>
+</nav>
 <div class="main wide">
 
   <section class="hero landing">
@@ -39,7 +38,7 @@
       </div>
     </section>
 
-  <section id="features"><h2><span class="sec-idx">01</span>What is <em>Forge Control?</em></h2>
+  <section id="features"><h2><span class="sec-idx">02</span>Feature <em>Breakdown</em></h2>
     <p class="sec-sub">One dashboard for your whole rig — no juggling a dozen utilities. Lighting, cooling, monitoring and games in a single hand-built interface.</p>
     <div class="cards six">
       <div class="card"><span class="num">01</span><h4>Unified Device Hub</h4><p>Boards, GPUs, keyboards, mice and headsets in one place. Auto-detected, organized, always one click away.</p><div class="tags"><span>Auto-detect</span><span>All brands</span><span>One hub</span></div></div>
@@ -55,13 +54,56 @@
     </div>
   </section>
 
+  <section id="about"><h2><span class="sec-idx">01</span>About <em>Forge Control</em></h2>
+    <p class="sec-sub">Forge Control is a hand-built control hub for your PC. One page to learn every module — lighting, cooling, monitoring and games — with guides written in plain language. No installer, no account, no background services. Open it, read it, tune your rig.</p>
+    <div class="cards">
+      <div class="card"><h4>10</h4><small>Modules covered end to end</small></div>
+      <div class="card"><h4>5</h4><small>Lighting presets to master</small></div>
+      <div class="card"><h4>4</h4><small>Fan modes from silent to turbo</small></div>
+      <div class="card"><h4>0</h4><small>Installers, accounts, fees</small></div>
+    </div>
+  </section>
+
+  <section id="download"><h2><span class="sec-idx">03</span>Download</h2>
+    <p class="sec-sub">Free. No account, no install — just open and explore.</p>
+    <div class="dltable">
+      <div class="dlrow dlhead"><span>Package</span><span>Version</span><span>Size</span><span></span></div>
+      <div class="dlrow"><span><b>Source Code</b><small>GitHub, MIT licensed</small></span><span>main</span><span>—</span><span><button class="btn primary" id="dlApp2">⬇ GitHub</button></span></div>
+    </div>
+  </section>
+
+  <section id="guide"><h2><span class="sec-idx">04</span>The Complete Guide</h2>
+    <p class="sec-sub">From zero to tuned rig in seven steps. Jump anywhere:</p>
+    <div class="jumprow"><a href="#step1">01</a><a href="#step2">02</a><a href="#step3">03</a><a href="#step4">04</a><a href="#step5">05</a><a href="#step6">06</a><a href="#step7">07</a></div>
+    <div class="steps">
+      <div class="step" id="step1"><span>1</span><div><h4>Open the page</h4><p>No installer — Forge Control runs right here. Scroll down and everything is already loaded.</p></div></div>
+      <div class="step" id="step2"><span>2</span><div><h4>Learn the modules</h4><p>Forge Glow for lighting, Fan Curves for cooling, Monitor for telemetry, Game Profiles for per-title setups.</p></div></div>
+      <div class="step" id="step3"><span>3</span><div><h4>List your devices</h4><p>Motherboard, GPU, keyboard, mouse, headset — know your rig before you tune it.</p></div></div>
+      <div class="step" id="step4"><span>4</span><div><h4>Set your glow</h4><p>Pick a color and effect, apply everywhere. One click, whole rig.</p></div></div>
+      <div class="step" id="step5"><span>5</span><div><h4>Tune your fans</h4><p>Start Balanced. Gaming hard? Turbo. Working late? Silent.</p></div></div>
+      <div class="step" id="step6"><span>6</span><div><h4>Build your library</h4><p>One profile per game — lighting, fans and mode follow the title.</p></div></div>
+      <div class="step" id="step7"><span>7</span><div><h4>Grab the source</h4><p>MIT licensed on GitHub. Clone it, self-host it, make it yours.</p></div></div>
+    </div>
+  </section>
+
+  <section id="faq"><h2><span class="sec-idx">05</span>Frequently Asked <em>Questions</em></h2>
+    <div class="faq">
+      <details open><summary>Is Forge Control really free?</summary><p>Yes. The site and all content are free, MIT licensed. No accounts, no paywalls.</p></details>
+      <details><summary>Do I install anything?</summary><p>No. Forge Control is a website — open it and read. Nothing runs on your PC.</p></details>
+      <details><summary>Where are my devices managed?</summary><p>Right here in the guide: list your rig, pick lighting and fan profiles, and apply them with your own tools.</p></details>
+      <details><summary>Does it work without ASUS hardware?</summary><p>Forge Control is hardware-agnostic — nothing here is tied to one vendor.</p></details>
+      <details><summary>Will it slow down my PC?</summary><p>No — it's a static web page. Close the tab and it uses zero resources.</p></details>
+      <details><summary>Is there a desktop app?</summary><p>Being built now — Electron app is next on the roadmap.</p></details>
+      <details><summary>Who built this?</summary><p>FORGESTUDIO-303. Hand-built UI and code, MIT licensed. Independent project — not affiliated with ASUS or ROG.</p></details>
+    </div>
+  </section>
+
   <footer>
     <div class="foot-links"><a href="#top">Home</a><a href="#features">Features</a><a href="https://github.com/FORGESTUDIO-303/forge-control" target="_blank">GitHub</a></div>
     <div>Forge Control • hand-built • v1.0</div>
     <div class="fine">Independent project. Not affiliated with ASUS, ROG, or Armoury Crate.</div>
   </footer>
 
-</div>
 </div>
 <div id="toast"></div>
 <script src="app.js"></script>
