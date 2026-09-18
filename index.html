@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forge Control — Command Your Rig</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo"><span class="logo-mark">F</span> FORGE<span class="thin">CONTROL</span></div>
+    <nav>
+      <a href="#dashboard" class="active">Dashboard</a>
+      <a href="#devices">Devices</a>
+      <a href="#lighting">Lighting</a>
+      <a href="#fans">Fans</a>
+      <a href="#library">Library</a>
+      <a href="#settings">Settings</a>
+    </nav>
+    <div class="side-foot">
+      <div class="ver">v0.1.0 • portable • A:\forge-control</div>
+      <button id="dlApp" class="btn primary">Download App</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <input id="search" placeholder="Search devices, games, settings…">
+      <div class="auth-row">
+        <span class="pill">DB: Neon live</span>
+        <span class="pill">API: live</span>
+        <button id="googleBtn" class="btn">Google login</button>
+        <button id="githubBtn" class="btn">GitHub login</button>
+        <span id="userPill" class="pill">not logged in</span>
+      </div>
+    </header>
+
+    <section class="hero" id="dashboard">
+      <div>
+        <h1>FORGE <span>CONTROL</span></h1>
+        <p>One hub for monitoring, lighting, fans and games. Armoury-style control, rebuilt lighter and simpler.</p>
+        <div class="hero-btns">
+          <button class="btn primary" onclick="document.getElementById('devices').scrollIntoView()">Explore devices</button>
+          <button class="btn" onclick="document.getElementById('lighting').scrollIntoView()">Try lighting</button>
+        </div>
+        <div class="badges"><span>Original UI — inspired by, not copied from ASUS</span><span id="gpuBadge">GPU: detecting…</span></div>
+      </div>
+      <div class="hero-card">
+        <h3>SYSTEM LIVE</h3>
+        <canvas id="spark" width="320" height="90"></canvas>
+        <div class="stat-grid">
+          <div><small>CPU</small><b id="cpuVal">—</b></div>
+          <div><small>GPU</small><b id="gpuVal">—</b></div>
+          <div><small>FANS</small><b id="fanVal">—</b></div>
+          <div><small>TEMP</small><b id="tempVal">—</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="devices"><h2>Devices</h2><div class="cards" id="deviceCards"></div></section>
+
+    <section id="lighting"><h2>Lighting — Forge Glow</h2>
+      <div class="panel2">
+        <div class="light-preview" id="lightPreview"></div>
+        <div class="light-ctrl">
+          <label>Color <input type="color" id="rgbPick" value="#ff0033"></label>
+          <label>Effect
+            <select id="fx">
+              <option>Static</option><option>Breathing</option>
+              <option>Strobing</option><option>Rainbow</option><option>Wave</option>
+            </select>
+          </label>
+          <label>Brightness <input type="range" id="bright" min="10" max="100" value="90"></label>
+          <div class="row"><button class="btn primary" id="applyFx">Apply to all</button><button class="btn" id="syncBtn">Sync devices</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fans"><h2>Fans</h2>
+      <div class="panel2">
+        <div class="fan-modes">
+          <button class="btn mode active">Silent</button><button class="btn mode">Balanced</button>
+          <button class="btn mode">Turbo</button><button class="btn mode">Manual</button>
+        </div>
+        <div id="fanSliders"></div>
+        <canvas id="curve" width="520" height="160"></canvas>
+      </div>
+    </section>
+
+    <section id="library"><h2>Game Library</h2><div class="cards" id="gameCards"></div></section>
+
+    <section id="settings"><h2>Settings</h2>
+      <div class="panel2 settings">
+        <label><input type="checkbox" checked> Start with Windows</label>
+        <label><input type="checkbox" checked> Portable mode (keep everything on A:)</label>
+        <label><input type="checkbox"> Share anonymous stats for ads/videos page</label>
+        <div class="row">
+          <button class="btn" id="exportBtn">Export config (JSON)</button>
+          <button class="btn" id="resetBtn">Reset demo</button>
+        </div>
+        <p class="note">DB + API live on Neon. Google login live — GitHub next, then desktop app.</p>
+      </div>
+    </section>
+
+    <footer>Forge Control • original design • no ASUS assets • built for A: drive • videos/ads module paused</footer>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
