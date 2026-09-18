@@ -8,19 +8,24 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<nav class="topnav">
-  <a class="brand" href="#top"><span class="logo-mark">F</span>FORGE<span class="thin">CONTROL</span></a>
-  <div class="nav-links">
-    <a href="#top">Home</a><a href="#features">Features</a><a href="#download">Download</a><a href="#guide">Guide</a><a href="#faq">FAQ</a>
-  </div>
-  <div class="nav-cta">
-    <span class="pill" id="apiPill">Forge Control</span>
-    <button class="btn" id="githubBtn">GitHub login</button>
-    <button class="btn" id="googleBtn">Google login</button>
-  </div>
-</nav>
-
-<div class="app single" id="top">
+<div class="app" id="top">
+  <aside class="sidebar">
+    <a class="logo" href="#top" style="text-decoration:none;color:inherit"><span class="logo-mark">F</span>FORGE<span class="thin">CONTROL</span></a>
+    <nav>
+      <a href="#top" class="active">Home</a>
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+      <a href="#guide">Guide</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="side-foot">
+      <span class="pill" id="apiPill">Forge Control</span>
+      <span class="pill" id="userPill">not logged in</span>
+      <button id="googleBtn" class="btn">Google login</button>
+      <button id="githubBtn" class="btn">GitHub login</button>
+      <button id="dlApp" class="btn primary">⬇ GitHub</button>
+    </div>
+  </aside>
 <div class="main wide">
 
   <section class="hero landing">
@@ -32,7 +37,7 @@
         <button class="btn primary big" id="heroDl">⬇ Download Free</button>
         <button class="btn big" onclick="document.getElementById('features').scrollIntoView()">Explore Features</button>
       </div>
-        <div class="badges"><span>v1.0 stable</span><span>Windows 10 / 11</span><span>Free</span><span id="userPill">not logged in</span></div>
+        <div class="badges"><span>v1.0 stable</span><span>Windows 10 / 11</span><span>Free</span></div>
         <div class="status-line" id="heroStatus" style="margin-top:12px"><span class="live-dot"></span><span id="heroStatusTxt">Welcome to Forge Control</span></div>
       </div>
     </section>
@@ -86,16 +91,8 @@
       <details><summary>Does it work without ASUS hardware?</summary><p>Forge Control is hardware-agnostic — it manages profiles, lighting presets, fan curves and your library for any rig. Nothing here is tied to one vendor.</p></details>
       <details><summary>Will it slow down my PC?</summary><p>No — it's a web page, not a background service. Close the tab and it uses zero resources. No drivers, no services, no tray apps.</p></details>
       <details><summary>Is there a desktop app?</summary><p>Not yet — that's next on the roadmap (Electron/Tauri). The web app is the full experience today.</p></details>
+      <details><summary>Login button does nothing. Why?</summary><p>Login needs the backend running. Easiest fix: double-click <b>run-api.bat</b>, open <b>http://localhost:3000</b>, and log in there. Online login needs the API deployed (Vercel) with the callback URLs added in Google / GitHub.</p></details>
       <details><summary>Who built this?</summary><p>FORGESTUDIO-303. Hand-built UI and code, MIT licensed. Independent project — not affiliated with ASUS or ROG.</p></details>
-    </div>
-  </section>
-
-  <section id="settings"><h2>Settings</h2>
-    <div class="panel2 settings">
-      <label><input type="checkbox" id="setNotif" checked> Notifications</label>
-      <label><input type="checkbox" id="setSync" checked> Cloud sync</label>
-      <label><input type="checkbox" id="setStats"> Share anonymous stats</label>
-      <div class="row"><button class="btn" id="resetBtn">Reset</button></div>
     </div>
   </section>
 

@@ -33,15 +33,26 @@ document.getElementById('resetBtn').onclick = () => toast('Settings reset');
 // scroll reveal + nav spy
 const io = new IntersectionObserver(es => es.forEach(x => x.isIntersecting && x.target.classList.add('vis')), { threshold: 0.12 });
 document.querySelectorAll('section').forEach(s => { s.classList.add('reveal'); io.observe(s); });
-const links = document.querySelectorAll('.nav-links a');
+const links = document.querySelectorAll('.sidebar nav a');
 window.addEventListener('scroll', () => {
   let cur = 'top';
   document.querySelectorAll('section[id]').forEach(s => { if (scrollY >= s.offsetTop - 140) cur = s.id; });
   links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
 });
-document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => toast(a.textContent)));
+document.querySelectorAll('.sidebar nav a').forEach(a => a.addEventListener('click', () => toast(a.textContent)));
 
-// auth
+// auth - needs the API backend; probe it before redirecting to login
+let apiUp = false;
+async function loginWith(provider) {
+  if (currentUser) { await fetch(api('/api/auth/logout'), { method: 'POST', credentials: 'include' }).catch(() => {}); currentUser = null; refreshAuth(); return; }
+  try {
+    const r = await fetch(api('/api/auth/status'), { credentials: 'include' });
+    if (!r.ok) throw 0;
+    location.href = api('/api/auth/' + provider);
+  } catch {
+    toast('Backend offline — double-click run-api.bat, open http://localhost:3000, then log in');
+  }
+}
 let currentUser = null;
 async function refreshAuth() {
   try {
@@ -61,14 +72,8 @@ async function refreshAuth() {
     }
   } catch { document.getElementById('userPill').textContent = 'Sign in to sync'; setStatus(false); }
 }
-document.getElementById('googleBtn').onclick = async () => {
-  if (currentUser) { await fetch(api('/api/auth/logout'), { method: 'POST', credentials: 'include' }).catch(() => {}); currentUser = null; refreshAuth(); return; }
-  location.href = api('/api/auth/google');
-};
-document.getElementById('githubBtn').onclick = async () => {
-  if (currentUser) { await fetch(api('/api/auth/logout'), { method: 'POST', credentials: 'include' }).catch(() => {}); currentUser = null; refreshAuth(); return; }
-  location.href = api('/api/auth/github');
-};
+document.getElementById('googleBtn').onclick = () => loginWith('google');
+document.getElementById('githubBtn').onclick = () => loginWith('github');
 if (location.hash.includes('login=ok')) toast('Welcome back ✓');
 
 refreshAuth();
