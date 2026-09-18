@@ -60,7 +60,12 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:radial-grad
 .stat-grid small{color:var(--dim);display:block;font-size:10px;letter-spacing:1px}
 .stat-grid b{font-size:17px}
 section{scroll-margin-top:80px}
-section h2{letter-spacing:2px;font-size:18px;border-left:4px solid var(--red);padding-left:12px;margin:30px 0 14px;animation:fadeUp .5s ease both}
+section h2{letter-spacing:2px;font-size:22px;margin:30px 0 14px;animation:fadeUp .5s ease both;display:flex;align-items:center;gap:12px}
+section h2::before{content:'';width:5px;height:26px;background:linear-gradient(var(--red),#7a0019);border-radius:2px;box-shadow:var(--glow)}
+.sec-idx{color:var(--red);font-size:15px;letter-spacing:3px}
+section h2 em{font-style:normal;color:var(--red2)}
+.card{border-top:2px solid transparent}
+.card:hover{border-top-color:var(--red)}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:13px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:15px;transition:.25s;animation:fadeUp .5s ease both}
 .card:hover{transform:translateY(-5px);border-color:var(--red);box-shadow:0 14px 34px rgba(0,0,0,.45),var(--glow)}
