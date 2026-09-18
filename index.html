@@ -3,109 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Forge Control — Command Your Rig</title>
+<title>Forge Control — Total PC Control. One Interface.</title>
+<meta name="description" content="Forge Control — hand-built hub for monitoring, lighting, fans and games. Free, live and online.">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="app">
-  <aside class="sidebar">
-    <div class="logo"><span class="logo-mark">F</span> FORGE<span class="thin">CONTROL</span></div>
-    <nav>
-      <a href="#dashboard" class="active">Dashboard</a>
-      <a href="#devices">Devices</a>
-      <a href="#lighting">Lighting</a>
-      <a href="#fans">Fans</a>
-      <a href="#library">Library</a>
-      <a href="#settings">Settings</a>
-    </nav>
-    <div class="side-foot">
-      <div class="ver" id="sideStatus"><span class="live-dot"></span><span id="sideStatusTxt">v1.0 • connecting…</span></div>
-      <button id="dlApp" class="btn primary">⬇ Download</button>
-    </div>
-  </aside>
-
-  <div class="main">
-    <header class="topbar">
-      <input id="search" placeholder="Search devices, games, settings…">
-      <div class="auth-row">
-        <span class="pill" id="apiPill">● Connecting…</span>
-        <button id="googleBtn" class="btn">Google login</button>
-        <button id="githubBtn" class="btn">GitHub login</button>
-        <span id="userPill" class="pill">not logged in</span>
-      </div>
-    </header>
-
-    <section class="hero" id="dashboard">
-      <div>
-        <div class="status-line" id="heroStatus"><span class="live-dot"></span><span id="heroStatusTxt">Connecting to Forge Cloud…</span></div>
-        <h1>FORGE <span>CONTROL</span></h1>
-        <p>One hub for monitoring, lighting, fans and games. Hand-built control center — fast, live and online.</p>
-        <div class="hero-btns">
-          <button class="btn primary big" id="heroDl">⬇ Download Forge Control</button>
-          <button class="btn big" onclick="document.getElementById('devices').scrollIntoView()">Explore devices</button>
-        </div>
-        <div class="badges"><span>Hand-built • no templates</span><span id="gpuBadge">Syncing…</span></div>
-      </div>
-      <div class="hero-card">
-        <h3>SYSTEM LIVE</h3>
-        <canvas id="spark" width="320" height="90"></canvas>
-        <div class="stat-grid">
-          <div><small>CPU</small><b id="cpuVal">—</b></div>
-          <div><small>GPU</small><b id="gpuVal">—</b></div>
-          <div><small>FANS</small><b id="fanVal">—</b></div>
-          <div><small>TEMP</small><b id="tempVal">—</b></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="devices"><h2>Devices</h2><div class="cards" id="deviceCards"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div></section>
-
-    <section id="lighting"><h2>Lighting — Forge Glow</h2>
-      <div class="panel2">
-        <div class="light-preview" id="lightPreview"></div>
-        <div class="light-ctrl">
-          <label>Color <input type="color" id="rgbPick" value="#ff0033"></label>
-          <label>Effect
-            <select id="fx">
-              <option>Static</option><option>Breathing</option>
-              <option>Strobing</option><option>Rainbow</option><option>Wave</option>
-            </select>
-          </label>
-          <label>Brightness <input type="range" id="bright" min="10" max="100" value="90"></label>
-          <div class="row"><button class="btn primary" id="applyFx">Apply to all</button><button class="btn" id="syncBtn">Sync devices</button></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="fans"><h2>Fans</h2>
-      <div class="panel2">
-        <div class="fan-modes">
-          <button class="btn mode active">Silent</button><button class="btn mode">Balanced</button>
-          <button class="btn mode">Turbo</button><button class="btn mode">Manual</button>
-        </div>
-        <div id="fanSliders"></div>
-        <canvas id="curve" width="520" height="160"></canvas>
-      </div>
-    </section>
-
-    <section id="library"><h2>Game Library</h2><div class="cards" id="gameCards"></div></section>
-
-    <section id="settings"><h2>Settings</h2>
-      <div class="panel2 settings">
-        <label><input type="checkbox" id="setNotif" checked> Notifications</label>
-        <label><input type="checkbox" id="setSync" checked> Cloud sync</label>
-        <label><input type="checkbox" id="setStats"> Share anonymous stats</label>
-        <div class="row">
-          <button class="btn primary" id="exportBtn">⬇ Download my config</button>
-          <button class="btn" id="resetBtn">Reset</button>
-        </div>
-        <p class="note">Signed in with Google or GitHub to sync lighting, fans and library across machines.</p>
-      </div>
-    </section>
-
-    <footer>Forge Control • hand-built • <span id="footStatus">connecting…</span></footer>
+<nav class="topnav">
+  <a class="brand" href="#top"><span class="logo-mark">F</span>FORGE<span class="thin">CONTROL</span></a>
+  <div class="nav-links">
+    <a href="#top">Home</a><a href="#features">Features</a><a href="#download">Download</a><a href="#guide">Guide</a><a href="#faq">FAQ</a>
   </div>
+  <div class="nav-cta">
+    <span class="pill" id="apiPill">● Connecting…</span>
+    <button class="btn" id="githubBtn">GitHub login</button>
+    <button class="btn" id="googleBtn">Google login</button>
+  </div>
+</nav>
+
+<div class="app single" id="top">
+<div class="main wide">
+
+  <section class="hero landing">
+    <div>
+      <div class="eyebrow">DEVICE CONTROL HUB • FREE</div>
+      <h1>FORGE<br><span>CONTROL</span></h1>
+      <p class="lede">Total PC Control. One Interface. Monitoring, Forge Glow lighting, fan curves, game profiles and cloud sync — hand-built, fast and online.</p>
+      <div class="hero-btns">
+        <button class="btn primary big" id="heroDl">⬇ Download Free</button>
+        <button class="btn big" onclick="document.getElementById('features').scrollIntoView()">Explore Features</button>
+      </div>
+      <div class="badges"><span>v1.0 stable</span><span>Windows 10 / 11</span><span>Free</span><span id="userPill">not logged in</span></div>
+    </div>
+    <div class="hero-card">
+      <h3>SYSTEM LIVE</h3>
+      <canvas id="spark" width="320" height="90"></canvas>
+      <div class="stat-grid">
+        <div><small>CPU</small><b id="cpuVal">—</b></div>
+        <div><small>GPU</small><b id="gpuVal">—</b></div>
+        <div><small>FANS</small><b id="fanVal">—</b></div>
+        <div><small>TEMP</small><b id="tempVal">—</b></div>
+      </div>
+      <div class="status-line" id="heroStatus"><span class="live-dot"></span><span id="heroStatusTxt">Connecting to Forge Cloud…</span></div>
+    </div>
+  </section>
+
+  <section class="modstrip">
+    <div class="mod"><b>Forge Glow</b><small>Lighting sync</small><i class="on" id="mLight">Active</i></div>
+    <div class="mod"><b>Fan Curves</b><small>Thermal control</small><i class="on">AI Mode</i></div>
+    <div class="mod"><b>Monitor</b><small>CPU • GPU • RAM</small><i class="on">Live</i></div>
+    <div class="mod"><b>Game Profiles</b><small>Per-title setups</small><i class="new">New</i></div>
+  </section>
+
+  <section id="features"><h2>What is <em>Forge Control?</em></h2>
+    <p class="sec-sub">One dashboard for your whole rig — no juggling a dozen utilities. Lighting, cooling, monitoring, games and cloud sync in a single hand-built interface.</p>
+    <div class="cards six">
+      <div class="card"><span class="num">01</span><h4>Forge Glow Lighting</h4><p>Sync color and effects across every device. Static, Breathing, Strobing, Rainbow and Wave presets plus a custom color picker — applied everywhere in one click.</p></div>
+      <div class="card"><span class="num">02</span><h4>Performance Modes</h4><p>Silent, Balanced, Turbo and Manual. One click retunes fans and cooling behavior for gaming, streaming or quiet work.</p></div>
+      <div class="card"><span class="num">03</span><h4>Live Monitoring</h4><p>Real-time CPU, GPU, fan and temperature cards with a sparkline. Bottlenecks show up before they become problems.</p></div>
+      <div class="card"><span class="num">04</span><h4>Game Library</h4><p>Every title in one place with per-game launch and optimize actions. Profiles follow your games, not the other way round.</p></div>
+      <div class="card"><span class="num">05</span><h4>Cloud Sync</h4><p>Sign in with Google or GitHub and your devices, lighting and fan setups sync across machines from Neon Postgres.</p></div>
+      <div class="card"><span class="num">06</span><h4>Fan Curves</h4><p>Per-fan sliders with a live curve canvas. Quiet when idle, aggressive under load — tuned by you in seconds.</p></div>
+    </div>
+  </section>
+
+  <section id="app"><h2>Your Rig, <em>Live</em></h2>
+    <p class="sec-sub">This is the app itself — devices, lighting, fans and library, running right here on this page.</p>
+    <h3 class="sub-h">Devices</h3><div class="cards" id="deviceCards"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
+    <h3 class="sub-h">Lighting — Forge Glow</h3>
+    <div class="panel2">
+      <div class="light-preview" id="lightPreview"></div>
+      <div class="light-ctrl">
+        <label>Color <input type="color" id="rgbPick" value="#ff0033"></label>
+        <label>Effect <select id="fx"><option>Static</option><option>Breathing</option><option>Strobing</option><option>Rainbow</option><option>Wave</option></select></label>
+        <label>Brightness <input type="range" id="bright" min="10" max="100" value="90"></label>
+        <div class="row"><button class="btn primary" id="applyFx">Apply to all</button><button class="btn" id="syncBtn">Sync devices</button></div>
+      </div>
+    </div>
+    <h3 class="sub-h">Fans</h3>
+    <div class="panel2">
+      <div class="fan-modes"><button class="btn mode active">Silent</button><button class="btn mode">Balanced</button><button class="btn mode">Turbo</button><button class="btn mode">Manual</button></div>
+      <div id="fanSliders"></div><canvas id="curve" width="520" height="160"></canvas>
+    </div>
+    <h3 class="sub-h">Game Library</h3><div class="cards" id="gameCards"></div>
+  </section>
+
+  <section id="download"><h2>Download</h2>
+    <p class="sec-sub">Free. No account needed to look around — sign in only for cloud sync.</p>
+    <div class="dltable">
+      <div class="dlrow dlhead"><span>Package</span><span>Version</span><span>Size</span><span></span></div>
+      <div class="dlrow"><span><b>Forge Control Web</b><small>runs here, nothing to install</small></span><span>v1.0</span><span>—</span><span><button class="btn primary" id="dlApp">⬇ Open App</button></span></div>
+      <div class="dlrow"><span><b>My Config (JSON)</b><small>devices, fans, lighting</small></span><span>v1.0</span><span>~4 KB</span><span><button class="btn" id="exportBtn">⬇ Download</button></span></div>
+      <div class="dlrow"><span><b>Source Code</b><small>GitHub, MIT licensed</small></span><span>main</span><span>—</span><span><button class="btn" onclick="window.open('https://github.com/FORGESTUDIO-303/forge-control','_blank')">GitHub</button></span></div>
+    </div>
+  </section>
+
+  <section id="guide"><h2>Getting Started</h2>
+    <p class="sec-sub">From zero to tuned rig in five minutes.</p>
+    <div class="steps">
+      <div class="step"><span>1</span><div><h4>Open the app</h4><p>No installer — it runs right here on this page. Scroll to <a href="#app">Your Rig, Live</a> and everything is already loaded.</p></div></div>
+      <div class="step"><span>2</span><div><h4>Sign in to sync</h4><p>Hit Google or GitHub login up top. Your setup syncs to the cloud so it follows you between machines.</p></div></div>
+      <div class="step"><span>3</span><div><h4>Check your devices</h4><p>Your device cards load from the cloud automatically. Hit Configure on any card to manage it.</p></div></div>
+      <div class="step"><span>4</span><div><h4>Set your glow</h4><p>Pick a color and effect in Forge Glow, then Apply to all. Watch the preview strip — that's exactly what your rig gets.</p></div></div>
+      <div class="step"><span>5</span><div><h4>Tune your fans</h4><p>Start with Balanced. Gaming hard? Switch to Turbo. Working late? Silent. The curve canvas shows the result live.</p></div></div>
+      <div class="step"><span>6</span><div><h4>Build your library</h4><p>Hit Optimize on a game card for a tuned profile, Launch when you're ready to play.</p></div></div>
+      <div class="step"><span>7</span><div><h4>Back it up</h4><p>Download your config JSON from the Download section. Re-import anytime — your rig, your rules.</p></div></div>
+    </div>
+  </section>
+
+  <section id="faq"><h2>Real Questions. <em>Real Answers.</em></h2>
+    <div class="faq">
+      <details open><summary>Is Forge Control really free?</summary><p>Yes. The web app, cloud sync and all features are free. Sign-in is only needed for syncing — browsing and tuning locally costs nothing.</p></details>
+      <details><summary>Do I install anything?</summary><p>No. Forge Control runs entirely in your browser. Your config downloads as a small JSON file you can keep or re-import.</p></details>
+      <details><summary>How does cloud sync work?</summary><p>Sign in with Google or GitHub. Devices, lighting and fan setups save to Neon Postgres and load on any machine you sign into.</p></details>
+      <details><summary>My devices aren't showing. What now?</summary><p>Check the status pill up top. "Connecting…" means the API is unreachable — check your connection and refresh. Signed out? Sign back in to reload your cloud devices.</p></details>
+      <details><summary>Does it work without ASUS hardware?</summary><p>Forge Control is hardware-agnostic — it manages profiles, lighting presets, fan curves and your library for any rig. Nothing here is tied to one vendor.</p></details>
+      <details><summary>Will it slow down my PC?</summary><p>No — it's a web page, not a background service. Close the tab and it uses zero resources. No drivers, no services, no tray apps.</p></details>
+      <details><summary>Is there a desktop app?</summary><p>Not yet — that's next on the roadmap (Electron/Tauri). The web app is the full experience today.</p></details>
+      <details><summary>Who built this?</summary><p>FORGESTUDIO-303. Hand-built UI and code, MIT licensed. Independent project — not affiliated with ASUS or ROG.</p></details>
+    </div>
+  </section>
+
+  <section id="settings"><h2>Settings</h2>
+    <div class="panel2 settings">
+      <label><input type="checkbox" id="setNotif" checked> Notifications</label>
+      <label><input type="checkbox" id="setSync" checked> Cloud sync</label>
+      <label><input type="checkbox" id="setStats"> Share anonymous stats</label>
+      <div class="row"><button class="btn" id="resetBtn">Reset</button></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-links"><a href="#top">Home</a><a href="#features">Features</a><a href="#download">Download</a><a href="https://github.com/FORGESTUDIO-303/forge-control" target="_blank">GitHub</a></div>
+    <div>Forge Control • hand-built • <span id="footStatus">connecting…</span></div>
+    <div class="fine">Independent project. Not affiliated with ASUS, ROG, or Armoury Crate.</div>
+  </footer>
+
 </div>
+</div>
+<div class="top-search"><input id="search" placeholder="Search devices, games…"></div>
 <div id="toast"></div>
 <script src="config.js"></script>
 <script src="app.js"></script>

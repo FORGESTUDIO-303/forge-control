@@ -15,13 +15,11 @@ function toast(m) {
 function setStatus(online) {
   const pill = document.getElementById('apiPill');
   const hero = document.getElementById('heroStatus');
-  const side = document.getElementById('sideStatus');
   const foot = document.getElementById('footStatus');
   const hs = document.getElementById('heroStatusTxt');
   if (online) {
     pill.textContent = '● Live'; pill.classList.add('live'); pill.classList.remove('off');
     hero.classList.add('on'); hs.textContent = 'Forge Cloud connected';
-    side.classList.add('on'); document.getElementById('sideStatusTxt').textContent = 'v1.0 • live';
     foot.textContent = 'all systems live';
   } else {
     pill.textContent = '● Connecting…'; pill.classList.add('off'); pill.classList.remove('live');
@@ -129,7 +127,7 @@ function downloadConfig() {
 }
 document.getElementById('exportBtn').onclick = downloadConfig;
 const dlAll = () => { downloadConfig(); setTimeout(() => window.open('https://github.com/FORGESTUDIO-303/forge-control', '_blank'), 400); };
-document.getElementById('dlApp').onclick = dlAll;
+document.getElementById('dlApp').onclick = () => { document.getElementById('app').scrollIntoView({ behavior: 'smooth' }); toast('Welcome to the app — it lives on this page'); };
 document.getElementById('heroDl').onclick = dlAll;
 document.getElementById('resetBtn').onclick = () => { renderFans(); applyLight(); drawCurve(); toast('Settings reset'); };
 
