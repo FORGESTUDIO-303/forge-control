@@ -1,5 +1,5 @@
 // Forge Control landing - static, no backend.
-const REPO = 'https://github.com/FORGESTUDIO-303/forge-control';
+const DL = 'https://github.com/FORGESTUDIO-303/forge-control-app/releases/download/v1.0.0/ForgeControl-Setup-1.0.0.exe';
 
 let toastT;
 function toast(m) {
@@ -8,10 +8,10 @@ function toast(m) {
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600);
 }
 
-// downloads -> source
-document.getElementById('dlApp').onclick = () => window.open(REPO, '_blank');
-document.getElementById('heroDl').onclick = () => window.open(REPO, '_blank');
-document.getElementById('dlApp2').onclick = () => window.open(REPO, '_blank');
+// downloads -> release exe, direct
+document.getElementById('dlApp').onclick = () => { toast('Downloading Forge Control…'); location.href = DL; };
+document.getElementById('heroDl').onclick = () => { toast('Downloading Forge Control…'); location.href = DL; };
+document.getElementById('dlApp2').onclick = () => { toast('Downloading Forge Control…'); location.href = DL; };
 
 // themes - live re-skin, remembered
 try {
