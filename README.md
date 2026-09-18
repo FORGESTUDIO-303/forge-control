@@ -9,17 +9,17 @@ Command your rig — monitoring, lighting, fans and games. A hand-built control 
 
 | Area | What you get |
 |---|---|
-| Dashboard | Live CPU / GPU / fan / temp cards + sparkline |
-| Devices | Live device list backed by Neon Postgres |
+| Dashboard | CPU / GPU / fan / temp telemetry at a glance |
+| Devices | Know-your-rig guides for every component |
 | Forge Glow | Color + Static / Breathing / Strobing / Rainbow / Wave + brightness |
-| Fans | Silent / Balanced / Turbo / Manual, sliders, curve canvas |
-| Library | Game cards with launch + optimize actions |
-| Settings | Config export (JSON) |
-| Auth | Sign in with Google or GitHub, users stored in Neon |
+| Fans | Silent / Balanced / Turbo / Manual profiles + curve guides |
+| Library | Game cards with launch + optimize guides |
+| Guide | 7 steps from zero to tuned rig |
+| FAQ | Real questions, real answers |
 
 ## Tech
 
-Hand-built with vanilla HTML / CSS / JS, Node + Express, Passport (Google + GitHub) .
+Hand-built with vanilla HTML / CSS / JS. Static site, no backend, no tracking.
 ## License
 
 MIT — see [LICENSE](LICENSE).

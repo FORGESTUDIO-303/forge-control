@@ -20,10 +20,7 @@
       <a href="#faq">FAQ</a>
     </nav>
     <div class="side-foot">
-      <span class="pill" id="apiPill">Forge Control</span>
-      <span class="pill" id="userPill">not logged in</span>
-      <button id="googleBtn" class="btn">Google login</button>
-      <button id="githubBtn" class="btn">GitHub login</button>
+      <span class="pill">v1.0 • Free</span>
       <button id="dlApp" class="btn primary">⬇ GitHub</button>
     </div>
   </aside>
@@ -33,13 +30,12 @@
     <div>
       <div class="eyebrow">DEVICE CONTROL HUB • FREE</div>
       <h1>FORGE<br><span>CONTROL</span></h1>
-      <p class="lede">Total PC Control. One Interface. Monitoring, Forge Glow lighting, fan curves, game profiles and cloud sync — hand-built, fast and online.</p>
+      <p class="lede">Total PC Control. One Interface. Monitoring, Forge Glow lighting, fan curves and game profiles — hand-built, fast and free.</p>
       <div class="hero-btns">
         <button class="btn primary big" id="heroDl">⬇ Download Free</button>
         <button class="btn big" onclick="document.getElementById('features').scrollIntoView()">Explore Features</button>
       </div>
         <div class="badges"><span>v1.0 stable</span><span>Windows 10 / 11</span><span>Free</span></div>
-        <div class="status-line" id="heroStatus" style="margin-top:12px"><span class="live-dot"></span><span id="heroStatusTxt">Welcome to Forge Control</span></div>
       </div>
     </section>
 
@@ -51,19 +47,19 @@
   </section>
 
   <section id="features"><h2>What is <em>Forge Control?</em></h2>
-    <p class="sec-sub">One dashboard for your whole rig — no juggling a dozen utilities. Lighting, cooling, monitoring, games and cloud sync in a single hand-built interface.</p>
+    <p class="sec-sub">One dashboard for your whole rig — no juggling a dozen utilities. Lighting, cooling, monitoring and games in a single hand-built interface.</p>
     <div class="cards six">
       <div class="card"><span class="num">01</span><h4>Forge Glow Lighting</h4><p>Sync color and effects across every device. Static, Breathing, Strobing, Rainbow and Wave presets plus a custom color picker — applied everywhere in one click.</p></div>
       <div class="card"><span class="num">02</span><h4>Performance Modes</h4><p>Silent, Balanced, Turbo and Manual. One click retunes fans and cooling behavior for gaming, streaming or quiet work.</p></div>
-      <div class="card"><span class="num">03</span><h4>Live Monitoring</h4><p>Real-time CPU, GPU, fan and temperature cards with a sparkline. Bottlenecks show up before they become problems.</p></div>
+      <div class="card"><span class="num">03</span><h4>Live Monitoring</h4><p>CPU, GPU, fan and temperature telemetry at a glance. Bottlenecks show up before they become problems.</p></div>
       <div class="card"><span class="num">04</span><h4>Game Library</h4><p>Every title in one place with per-game launch and optimize actions. Profiles follow your games, not the other way round.</p></div>
-      <div class="card"><span class="num">05</span><h4>Cloud Sync</h4><p>Sign in with Google or GitHub and your devices, lighting and fan setups sync across machines from Neon Postgres.</p></div>
+      <div class="card"><span class="num">05</span><h4>Saved Profiles</h4><p>Lighting and fan setups saved as profiles. Switch your whole rig's mood in one click.</p></div>
       <div class="card"><span class="num">06</span><h4>Fan Curves</h4><p>Per-fan sliders with a live curve canvas. Quiet when idle, aggressive under load — tuned by you in seconds.</p></div>
     </div>
   </section>
 
   <section id="download"><h2>Download</h2>
-    <p class="sec-sub">Free. No account needed to look around — sign in only for cloud sync.</p>
+    <p class="sec-sub">Free. No account, no install — just open and explore.</p>
     <div class="dltable">
       <div class="dlrow dlhead"><span>Package</span><span>Version</span><span>Size</span><span></span></div>
       <div class="dlrow"><span><b>Source Code</b><small>GitHub, MIT licensed</small></span><span>main</span><span>—</span><span><button class="btn primary" id="dlApp">⬇ GitHub</button></span></div>
@@ -73,9 +69,9 @@
   <section id="guide"><h2>Getting Started</h2>
     <p class="sec-sub">From zero to tuned rig in five minutes.</p>
     <div class="steps">
-      <div class="step"><span>1</span><div><h4>Open the app</h4><p>No installer — it runs right here on this page. Scroll to <a href="#app">Your Rig, Live</a> and everything is already loaded.</p></div></div>
-      <div class="step"><span>2</span><div><h4>Sign in to sync</h4><p>Hit Google or GitHub login up top. Your setup syncs to the cloud so it follows you between machines.</p></div></div>
-      <div class="step"><span>3</span><div><h4>Add your devices</h4><p>Sign in and register your rig — motherboard, GPU, keyboard, mouse, headset. Everything appears in your device hub.</p></div></div>
+      <div class="step"><span>1</span><div><h4>Open the page</h4><p>No installer — Forge Control runs right here. Scroll down and everything is already loaded.</p></div></div>
+      <div class="step"><span>2</span><div><h4>Learn the modules</h4><p>Forge Glow for lighting, Fan Curves for cooling, Monitor for telemetry, Game Profiles for per-title setups.</p></div></div>
+      <div class="step"><span>3</span><div><h4>List your devices</h4><p>Motherboard, GPU, keyboard, mouse, headset — know your rig before you tune it.</p></div></div>
       <div class="step"><span>4</span><div><h4>Set your glow</h4><p>Pick a color and effect in Forge Glow, then Apply to all. Watch the preview strip — that's exactly what your rig gets.</p></div></div>
       <div class="step"><span>5</span><div><h4>Tune your fans</h4><p>Start with Balanced. Gaming hard? Switch to Turbo. Working late? Silent. The curve canvas shows the result live.</p></div></div>
       <div class="step"><span>6</span><div><h4>Build your library</h4><p>Hit Optimize on a game card for a tuned profile, Launch when you're ready to play.</p></div></div>
@@ -85,28 +81,25 @@
 
   <section id="faq"><h2>Real Questions. <em>Real Answers.</em></h2>
     <div class="faq">
-      <details open><summary>Is Forge Control really free?</summary><p>Yes. The web app, cloud sync and all features are free. Sign-in is only needed for syncing — browsing and tuning locally costs nothing.</p></details>
-      <details><summary>Do I install anything?</summary><p>No. Forge Control runs entirely in your browser. Your config downloads as a small JSON file you can keep or re-import.</p></details>
-      <details><summary>How does cloud sync work?</summary><p>Sign in with Google or GitHub. Devices, lighting and fan setups save to Neon Postgres and load on any machine you sign into.</p></details>
-      <details><summary>My devices aren't showing. What now?</summary><p>Sign out and back in to reload your cloud devices. Still stuck? Check your connection and refresh.</p></details>
-      <details><summary>Does it work without ASUS hardware?</summary><p>Forge Control is hardware-agnostic — it manages profiles, lighting presets, fan curves and your library for any rig. Nothing here is tied to one vendor.</p></details>
-      <details><summary>Will it slow down my PC?</summary><p>No — it's a web page, not a background service. Close the tab and it uses zero resources. No drivers, no services, no tray apps.</p></details>
-      <details><summary>Is there a desktop app?</summary><p>Not yet — that's next on the roadmap (Electron/Tauri). The web app is the full experience today.</p></details>
-      <details><summary>Login button does nothing. Why?</summary><p>Login needs the backend running. Easiest fix: double-click <b>run-api.bat</b>, open <b>http://localhost:3000</b>, and log in there. Online login needs the API deployed (Vercel) with the callback URLs added in Google / GitHub.</p></details>
+      <details open><summary>Is Forge Control really free?</summary><p>Yes. The site and all content are free, MIT licensed. No accounts, no paywalls.</p></details>
+      <details><summary>Do I install anything?</summary><p>No. Forge Control is a website — open it and read. Nothing runs on your PC.</p></details>
+      <details><summary>Where are my devices managed?</summary><p>Right here in the guide: list your rig, pick lighting and fan profiles, and apply them with your own tools. This site is the manual and the download hub.</p></details>
+      <details><summary>Does it work without ASUS hardware?</summary><p>Forge Control is hardware-agnostic — profiles, lighting presets, fan curves and the library apply to any rig. Nothing here is tied to one vendor.</p></details>
+      <details><summary>Will it slow down my PC?</summary><p>No — it's a static web page. Close the tab and it uses zero resources. No drivers, no services, no tray apps.</p></details>
+      <details><summary>Is there a desktop app?</summary><p>Not yet — that's next on the roadmap (Electron/Tauri).</p></details>
       <details><summary>Who built this?</summary><p>FORGESTUDIO-303. Hand-built UI and code, MIT licensed. Independent project — not affiliated with ASUS or ROG.</p></details>
     </div>
   </section>
 
   <footer>
     <div class="foot-links"><a href="#top">Home</a><a href="#features">Features</a><a href="#download">Download</a><a href="https://github.com/FORGESTUDIO-303/forge-control" target="_blank">GitHub</a></div>
-    <div>Forge Control • hand-built • <span id="footStatus">v1.0</span></div>
+    <div>Forge Control • hand-built • v1.0</div>
     <div class="fine">Independent project. Not affiliated with ASUS, ROG, or Armoury Crate.</div>
   </footer>
 
 </div>
 </div>
 <div id="toast"></div>
-<script src="config.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
