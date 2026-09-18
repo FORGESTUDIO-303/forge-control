@@ -6,12 +6,12 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
 const path = require('path');
-const { query } = require('./db');
+const { query, getPool } = require('./db');
 
 const app = express();
 app.set('trust proxy', 1);
 const FRONTEND_URL = (process.env.FRONTEND_URL || '').replace(/\/$/, '');
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin) return cb(null, true);
@@ -23,10 +23,17 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
+// Serverless-safe sessions: Postgres store on Vercel/prod, memory locally
+let sessionStore;
+if (process.env.DATABASE_URL && (process.env.VERCEL || isProd)) {
+  const pgSession = require('connect-pg-simple')(session);
+  sessionStore = new pgSession({ pool: getPool(), tableName: 'session' });
+}
 app.use(session({
+  store: sessionStore,
   secret: process.env.SESSION_SECRET || 'forge-dev',
   resave: false, saveUninitialized: false,
-  cookie: isProd ? { secure: true, sameSite: 'none' } : { sameSite: 'lax' },
+  cookie: isProd ? { secure: true, sameSite: 'none', maxAge: 7 * 24 * 3600 * 1000 } : { sameSite: 'lax' },
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -133,5 +140,9 @@ app.get('/api/auth/github/callback',
 app.get('/api/auth/me', (req, res) => req.user ? res.json(req.user) : res.status(401).json({ error: 'not logged in' }));
 app.post('/api/auth/logout', (req, res) => req.logout(() => res.json({ ok: true })));
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Forge Control API on http://localhost:${PORT}`));
+// Vercel serverless: export app, only listen locally
+module.exports = app;
+if (!process.env.VERCEL && require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`Forge Control API on http://localhost:${PORT}`));
+}
