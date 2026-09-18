@@ -1,19 +1,18 @@
 # Forge Control
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/site-live-brightgreen)](https://forgestudio-303.github.io/forge-control/)
+[![Site](https://img.shields.io/badge/site-live-brightgreen)](https://forgestudio-303.github.io/forge-control/)
 [![API](https://img.shields.io/badge/api-vercel-black)](https://github.com/FORGESTUDIO-303/forge-control)
 [![Neon Postgres](https://img.shields.io/badge/db-neon-00e699)](https://neon.tech)
 
-Command your rig — monitoring, lighting, fans and games. Armoury-style control, rebuilt lighter, simpler and portable.
+Command your rig — monitoring, lighting, fans and games. A hand-built control hub, fast and online.
 
-> Original UI inspired by device-control hubs. No ASUS assets or code. All design here is original.
+> Hand-crafted UI inspired by device-control hubs. No ASUS assets or code. Everything here is original.
 
 ## Live
 
-- **Website:** https://forgestudio-303.github.io/forge-control/
-- **API:** set `window.FORGE_API` in `config.js` to your Vercel URL, e.g. `https://forge-control.vercel.app`
-- **Health:** `GET <api>/api/health` → `{ ok: true, db: "up" }`
+- **App:** https://forgestudio-303.github.io/forge-control/
+- **API health:** `https://<your-app>.vercel.app/api/health` → `{ ok: true, db: "up" }`
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/FORGESTUDIO-303/forge-control)
 
@@ -22,20 +21,26 @@ Command your rig — monitoring, lighting, fans and games. Armoury-style control
 | Area | What you get |
 |---|---|
 | Dashboard | Live CPU / GPU / fan / temp cards + sparkline |
-| Devices | Neon Postgres (`/api/devices`) with offline demo fallback |
+| Devices | Live device list backed by Neon Postgres |
 | Forge Glow | Color + Static / Breathing / Strobing / Rainbow / Wave + brightness |
 | Fans | Silent / Balanced / Turbo / Manual, sliders, curve canvas |
 | Library | Game cards with launch + optimize actions |
-| Settings | Config export (JSON), portable USB mode |
-| Auth | Google OAuth + GitHub OAuth (Passport), users in Neon |
+| Settings | Config export (JSON) |
+| Auth | Sign in with Google or GitHub, users stored in Neon |
 
-## Quick start
+## How it works
 
-**Online (recommended):** open the website link above. Set `window.FORGE_API` to your Vercel backend URL and redeploy — no localhost needed.
+```
+Browser (GitHub Pages)
+   │  https://forgestudio-303.github.io/forge-control/
+   ▼
+API (Vercel serverless, Express)
+   │  https://<your-app>.vercel.app/api/*
+   ▼
+Neon Postgres (devices, fans, lighting, users, sessions)
+```
 
-**Local USB portable:**
-- Site only: double-click `run.bat` → http://localhost:8000 (or open `index.html`)
-- Full stack: double-click `run-api.bat` → http://localhost:3000
+The site calls the API via `window.FORGE_API` in `config.js`. Auth is Passport OAuth (Google + GitHub) with Postgres-backed sessions, so login survives serverless restarts.
 
 ## API
 
@@ -49,9 +54,9 @@ Command your rig — monitoring, lighting, fans and games. Armoury-style control
 | GET | `/api/auth/google`, `/callback` | Google OAuth |
 | GET | `/api/auth/github`, `/callback` | GitHub OAuth |
 
-## Deploy the API (Vercel, free)
+## Deploy your own
 
-1. Vercel → New Project → import `FORGESTUDIO-303/forge-control` → Deploy (`vercel.json` included)
+1. Vercel → New Project → import `FORGESTUDIO-303/forge-control` → Deploy
 2. Settings → Environment Variables:
    ```
    DATABASE_URL=postgresql://...neon.tech/neondb?sslmode=require
@@ -62,19 +67,21 @@ Command your rig — monitoring, lighting, fans and games. Armoury-style control
    GITHUB_CLIENT_ID / GITHUB_CLIENT_SECRET
    GITHUB_CALLBACK_URL=https://<your-app>.vercel.app/api/auth/github/callback
    ```
-3. Add the 2 callback URLs in Google Cloud Console + GitHub OAuth App, redeploy
-4. `config.js`: `window.FORGE_API='https://<your-app>.vercel.app'`, push — site is fully online
+3. Add the callback URLs in Google Cloud Console + your GitHub OAuth App, redeploy
+4. Point the site at it: `window.FORGE_API='https://<your-app>.vercel.app'` in `config.js`
 
-Local dev keeps `http://localhost:3000/...` callbacks (see `api/.env.example`). Never commit `api/.env`.
+## Tech
+
+Hand-built with vanilla HTML / CSS / JS, Node + Express, Passport (Google + GitHub), Neon Postgres, hosted on GitHub Pages + Vercel.
 
 ## Roadmap
 
-- [x] Website (GitHub Pages)
-- [x] Neon Postgres + API (Vercel serverless)
+- [x] Website
+- [x] Neon Postgres + API
 - [x] Google login
 - [x] GitHub login
 - [ ] Desktop app (Electron / Tauri)
-- [ ] Zero-budget ads (shorts pipeline — video generator paused)
+- [ ] Zero-budget launch shorts (video generator paused)
 
 ## License
 
