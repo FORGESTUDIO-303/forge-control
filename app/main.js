@@ -70,6 +70,36 @@ ipcMain.handle('fancontrol', (_e, action) => {
 
 ipcMain.handle('open-url', (_e, url) => { shell.openExternal(url); return true; });
 
+// ---- OpenFAN controller HTTP API (open-source open-hardware, GPL) ----
+// Docs: https://docs.sasakaranovic.com/openfan/api/  Base: http://host:3000/api/v0
+const http = require('http');
+function ofGet(base, p, timeout = 8000) {
+  const url = (base || 'http://127.0.0.1:3000/api/v0').replace(/\/$/, '') + p;
+  return new Promise((resolve) => {
+    const req = http.get(url, (res) => {
+      let body = '';
+      res.on('data', (c) => (body += c));
+      res.on('end', () => {
+        try { resolve(JSON.parse(body)); }
+        catch { resolve({ raw: body.slice(0, 500), status: res.statusCode }); }
+      });
+    });
+    req.on('error', () => resolve({ error: 'openfan-offline' }));
+    req.setTimeout(timeout, () => { req.destroy(); resolve({ error: 'openfan-offline' }); });
+  });
+}
+ipcMain.handle('openfan', async (_e, o = {}) => {
+  const base = o.base;
+  const a = o.action || 'status';
+  if (a === 'status') return ofGet(base, '/fan/status');
+  if (a === 'info') return ofGet(base, '/info');
+  if (a === 'profiles') return ofGet(base, '/profiles/list');
+  if (a === 'apply') return ofGet(base, '/profiles/set?name=' + encodeURIComponent(o.name || ''));
+  if (a === 'pwm') return ofGet(base, `/fan/${o.fan}/set?value=${o.value}`);
+  if (a === 'rpm') return ofGet(base, `/fan/${o.fan}/rpm?value=${o.value}`);
+  return { error: 'bad-action' };
+});
+
 // ---- real fan control (LibreHardwareMonitor, free OSS) ----
 const fanCtl = () => path.join(__dirname, 'tools', 'lhm', 'FanCtl.exe');
 function fanRun(args) {

@@ -7,5 +7,6 @@ contextBridge.exposeInMainWorld('forge', {
   fancontrol: (action) => ipcRenderer.invoke('fancontrol', action),
   fanRealList: () => ipcRenderer.invoke('fan-real-list'),
   fanRealSet: (o) => ipcRenderer.invoke('fan-real-set', o),
+  openfan: (o) => ipcRenderer.invoke('openfan', o),
   openUrl: (url) => ipcRenderer.invoke('open-url', url),
 });

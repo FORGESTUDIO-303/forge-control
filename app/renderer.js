@@ -222,7 +222,29 @@ async function renderTools() {
   w.appendChild(toolCard('OpenRGB', rgbN > 0 ? `● ${rgbN} device(s) live` : '○ Server offline — start it in OpenRGB > Server tab', rgbBtns));
   // Telemetry
   w.appendChild(toolCard('Telemetry', realStats ? `● Live: CPU ${Math.round(realStats.cpuLoad || 0)}%` : '○ Animated estimates (admin unlocks real temps)', [['Refresh', async () => { try { const s = await window.forge.stats(); if (!s.error) realStats = s; } catch {} renderTools(); }]]));
-  // FanControl
+  // OpenFAN controller (HTTP API :3000/api/v0)
+  const ofBase = () => { try { return localStorage.getItem('forge-openfan') || 'http://127.0.0.1:3000/api/v0'; } catch { return 'http://127.0.0.1:3000/api/v0'; } };
+  try {
+    const st = await window.forge.openfan({ base: ofBase(), action: 'status' });
+    const fans = Array.isArray(st) ? st : (st.fans || st.data || []);
+    const n = Array.isArray(fans) ? fans.length : 0;
+    if (!st.error && n > 0) {
+      w.appendChild(toolCard('OpenFAN', `● ${n} fan(s) live`, [
+        ['Rescan', async () => { renderTools(); renderRealFans(); }],
+        ['Profiles', async () => {
+          const p = await window.forge.openfan({ base: ofBase(), action: 'profiles' });
+          const names = Array.isArray(p) ? p.map(x => x.name || x).join(', ') : JSON.stringify(p).slice(0, 120);
+          toast('Profiles: ' + names);
+        }],
+      ]));
+    } else {
+      w.appendChild(toolCard('OpenFAN', '○ No controller — needs OpenFAN hardware + server on :3000', [
+        ['Rescan', async () => { renderTools(); renderRealFans(); }],
+        ['Get OpenFAN', () => window.forge.openUrl('https://github.com/SasaKaranovic/OpenFanController')],
+      ]));
+    }
+  } catch {}
+  // FanControl (no API - detect + launch)
   try {
     const fc = await window.forge.fancontrol('status');
     w.appendChild(toolCard('FanControl', fc.installed ? '● Installed' : '○ Not found', fc.installed
@@ -237,21 +259,40 @@ async function renderRealFans() {
   try { const r = await window.forge.fanRealList(); if (Array.isArray(r)) list = r.filter(s => s.type === 'Control'); } catch {}
   w.innerHTML = '';
   if (!list.length) {
-    w.innerHTML = '<small class="dim">No controllable fans detected (needs desktop SuperIO chip or admin rights). Profiles above still work as presets.</small>';
-    return;
+    w.innerHTML = '<small class="dim">No SuperIO controls on this PC (needs desktop chip or admin). Profiles above still work as presets.</small>';
+  } else {
+    list.forEach(c => {
+      const row = document.createElement('div'); row.className = 'fan-row';
+      row.innerHTML = `<b>${c.name}</b><input type="range" min="0" max="100" value="${Math.round(c.value || 50)}"><span>${c.hw}</span>`;
+      row.querySelector('input').onchange = async e => {
+        const v = +e.target.value;
+        try {
+          const r = await window.forge.fanRealSet({ id: c.id, value: v });
+          toast(r && r.ok ? `${c.name} → ${v}% ✓` : 'Control rejected (try admin)');
+        } catch { toast('Control failed'); }
+      };
+      w.appendChild(row);
+    });
   }
-  list.forEach(c => {
-    const row = document.createElement('div'); row.className = 'fan-row';
-    row.innerHTML = `<b>${c.name}</b><input type="range" min="0" max="100" value="${Math.round(c.value || 50)}"><span>${c.hw}</span>`;
-    row.querySelector('input').onchange = async e => {
-      const v = +e.target.value;
-      try {
-        const r = await window.forge.fanRealSet({ id: c.id, value: v });
-        toast(r && r.ok ? `${c.name} → ${v}% ✓` : 'Control rejected (try admin)');
-      } catch { toast('Control failed'); }
-    };
-    w.appendChild(row);
-  });
+  // OpenFAN hardware fans (PWM sliders via :3000/api/v0)
+  try {
+    const base = (() => { try { return localStorage.getItem('forge-openfan') || 'http://127.0.0.1:3000/api/v0'; } catch { return 'http://127.0.0.1:3000/api/v0'; } })();
+    const st = await window.forge.openfan({ base, action: 'status' });
+    const fans = Array.isArray(st) ? st : (st.fans || st.data || []);
+    if (!st.error && Array.isArray(fans) && fans.length) {
+      fans.forEach((f, i) => {
+        const nm = f.name || ('Fan ' + (f.id ?? i + 1));
+        const row = document.createElement('div'); row.className = 'fan-row';
+        row.innerHTML = `<b>${nm}</b><input type="range" min="0" max="100" value="${Math.round(f.pwm ?? f.duty ?? 50)}"><span>OpenFAN</span>`;
+        row.querySelector('input').onchange = async e => {
+          const v = +e.target.value;
+          await window.forge.openfan({ base, action: 'pwm', fan: f.id ?? i + 1, value: v });
+          toast(`${nm} → ${v}% ✓`);
+        };
+        w.appendChild(row);
+      });
+    }
+  } catch {}
 }
 
 document.getElementById('exportBtn').onclick = () => {
