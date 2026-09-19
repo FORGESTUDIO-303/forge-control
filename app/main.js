@@ -19,8 +19,8 @@ function createWindow() {
 }
 
 // ---- open-source tool bridges ----
-const PY = 'python';
-const ctl = () => path.join(__dirname, 'tools', 'openrgb_ctl.py');
+const PY = process.platform === 'win32' ? 'python' : 'python3';
+const ctl = () => path.join(__dirname.replace(/app\.asar$/, 'app.asar.unpacked'), 'tools', 'openrgb_ctl.py');
 
 function runPy(args, timeout = 15000) {
   try {
@@ -100,8 +100,12 @@ ipcMain.handle('openfan', async (_e, o = {}) => {
   return { error: 'bad-action' };
 });
 
-// ---- real fan control (LibreHardwareMonitor, free OSS) ----
-const fanCtl = () => path.join(__dirname, 'tools', 'lhm', 'FanCtl.exe');
+// ---- real fan control (LibreHardwareMonitor, free OSS, Windows) ----
+const fanCtl = () => {
+  const dev = path.join(__dirname, 'tools', 'lhm', 'FanCtl.exe');
+  if (fs.existsSync(dev)) return dev;
+  return path.join(process.resourcesPath, 'lhm', 'FanCtl.exe');
+};
 function fanRun(args) {
   try {
     if (!fs.existsSync(fanCtl())) return { error: 'fan-helper-missing' };

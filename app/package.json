@@ -13,6 +13,7 @@
     "directories": {
       "output": "dist"
     },
+    "asarUnpack": ["tools/openrgb_ctl.py"],
     "files": [
       "main.js",
       "preload.js",
@@ -20,13 +21,19 @@
       "styles.css",
       "renderer.js",
       "run.bat",
-      "package.json"
+      "package.json",
+      "tools/openrgb_ctl.py"
     ],
     "win": {
       "target": [
         "nsis"
+      ],
+      "extraResources": [
+        { "from": "tools/lhm/", "to": "lhm/", "filter": ["FanCtl.exe", "*.dll"] }
       ]
     },
+    "mac": { "target": ["dmg", "zip"] },
+    "linux": { "target": ["AppImage"], "category": "Utility", "desktopName": "Forge Control", "syncDesktopName": true },
     "nsis": {
       "oneClick": false,
       "perMachine": false,
