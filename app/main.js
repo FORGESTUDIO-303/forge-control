@@ -70,6 +70,19 @@ ipcMain.handle('fancontrol', (_e, action) => {
 
 ipcMain.handle('open-url', (_e, url) => { shell.openExternal(url); return true; });
 
+// ---- real fan control (LibreHardwareMonitor, free OSS) ----
+const fanCtl = () => path.join(__dirname, 'tools', 'lhm', 'FanCtl.exe');
+function fanRun(args) {
+  try {
+    if (!fs.existsSync(fanCtl())) return { error: 'fan-helper-missing' };
+    const r = spawnSync(fanCtl(), args, { encoding: 'utf8', timeout: 20000 });
+    const out = (r.stdout || '').trim().split('\n').pop() || '[]';
+    return JSON.parse(out);
+  } catch (e) { return { error: String(e.message || e).slice(0, 120) }; }
+}
+ipcMain.handle('fan-real-list', () => fanRun(['list']));
+ipcMain.handle('fan-real-set', (_e, o) => fanRun(['set', String(o.id), String(o.value)]));
+
 app.whenReady().then(createWindow);
 app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
 app.on('activate', () => { if (BrowserWindow.getAllWindows().length === 0) createWindow(); });

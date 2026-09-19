@@ -230,6 +230,30 @@ async function renderTools() {
       : [['Get FanControl', () => window.forge.openUrl('https://github.com/Rem0o/FanControl.Releases')]]));
   } catch {}
 }
+// real hardware fan controls (LibreHardwareMonitor) - empty = none on this PC
+async function renderRealFans() {
+  const w = document.getElementById('realFans');
+  let list = [];
+  try { const r = await window.forge.fanRealList(); if (Array.isArray(r)) list = r.filter(s => s.type === 'Control'); } catch {}
+  w.innerHTML = '';
+  if (!list.length) {
+    w.innerHTML = '<small class="dim">No controllable fans detected (needs desktop SuperIO chip or admin rights). Profiles above still work as presets.</small>';
+    return;
+  }
+  list.forEach(c => {
+    const row = document.createElement('div'); row.className = 'fan-row';
+    row.innerHTML = `<b>${c.name}</b><input type="range" min="0" max="100" value="${Math.round(c.value || 50)}"><span>${c.hw}</span>`;
+    row.querySelector('input').onchange = async e => {
+      const v = +e.target.value;
+      try {
+        const r = await window.forge.fanRealSet({ id: c.id, value: v });
+        toast(r && r.ok ? `${c.name} → ${v}% ✓` : 'Control rejected (try admin)');
+      } catch { toast('Control failed'); }
+    };
+    w.appendChild(row);
+  });
+}
+
 document.getElementById('exportBtn').onclick = () => {
   const data = { app: 'Forge Control v1.0', exported: new Date().toISOString(), devices, fans, color: document.getElementById('rgbPick').value, effect: document.getElementById('fx').value };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -251,4 +275,4 @@ links.forEach(a => a.addEventListener('click', () => side.classList.remove('open
 setInterval(updateLive, 1200);
 renderFans(); applyLight(); drawCurve(); updateLive();
 rescanHardware().then(() => renderTools());
-renderTools();
+renderTools(); renderRealFans();

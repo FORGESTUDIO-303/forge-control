@@ -5,5 +5,7 @@ contextBridge.exposeInMainWorld('forge', {
   rgbSet: (o) => ipcRenderer.invoke('rgb-set', o),
   stats: () => ipcRenderer.invoke('stats'),
   fancontrol: (action) => ipcRenderer.invoke('fancontrol', action),
+  fanRealList: () => ipcRenderer.invoke('fan-real-list'),
+  fanRealSet: (o) => ipcRenderer.invoke('fan-real-set', o),
   openUrl: (url) => ipcRenderer.invoke('open-url', url),
 });
