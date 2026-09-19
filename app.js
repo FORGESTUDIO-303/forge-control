@@ -1,5 +1,6 @@
 // Forge Control landing - static, no backend.
-const DL = 'https://github.com/FORGESTUDIO-303/forge-control/releases/download/v1.2.0/ForgeControl-Setup-1.2.0.exe';
+const DL_WIN = 'https://github.com/FORGESTUDIO-303/forge-control/releases/download/v1.2.0/ForgeControl-Setup-1.2.0.exe';
+const DL_LINUX = 'https://github.com/FORGESTUDIO-303/forge-control/releases/download/v1.2.0/ForgeControl-1.2.0.AppImage';
 
 let toastT;
 function toast(m) {
@@ -8,10 +9,11 @@ function toast(m) {
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600);
 }
 
-// downloads -> release exe, direct
-document.getElementById('dlApp').onclick = () => { toast('Downloading Forge Control…'); location.href = DL; };
-document.getElementById('heroDl').onclick = () => { toast('Downloading Forge Control…'); location.href = DL; };
-document.getElementById('dlApp2').onclick = () => { toast('Downloading Forge Control…'); location.href = DL; };
+// downloads -> release assets, direct (version + size match the table)
+document.getElementById('dlApp').onclick = () => { toast('Downloading for Windows…'); location.href = DL_WIN; };
+document.getElementById('heroDl').onclick = () => { toast('Downloading for Windows…'); location.href = DL_WIN; };
+document.getElementById('dlApp2').onclick = () => { toast('Downloading for Windows…'); location.href = DL_WIN; };
+document.getElementById('dlLinux').onclick = () => { toast('Downloading for Linux…'); location.href = DL_LINUX; };
 
 // themes - live re-skin, remembered
 try {
