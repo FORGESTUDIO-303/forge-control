@@ -1,5 +1,5 @@
 // Forge Control landing - static, no backend.
-const DL = 'https://github.com/FORGESTUDIO-303/forge-control-app/releases/download/v1.0.0/ForgeControl-Setup-1.0.0.exe';
+const DL = 'https://github.com/FORGESTUDIO-303/forge-control/releases/download/v1.0.0/ForgeControl-Setup-1.0.0.exe';
 
 let toastT;
 function toast(m) {

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forge Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<button id="menuBtn" aria-label="Menu">☰</button>
+<div class="app" id="top">
+  <aside class="sidebar">
+    <a class="logo" href="#top" style="text-decoration:none;color:inherit"><span class="logo-mark">F</span>FORGE<span class="thin">CONTROL</span></a>
+    <nav>
+      <a href="#dashboard" class="active">Dashboard</a>
+      <a href="#devices">Devices</a>
+      <a href="#lighting">Lighting</a>
+      <a href="#fans">Fans</a>
+      <a href="#library">Library</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#updates">Updates</a>
+    </nav>
+    <div class="side-foot">
+      <span class="pill">v1.0 • Desktop</span>
+      <div class="row theme-row"><button class="btn theme-dot" data-theme-set="crimson" title="Crimson">R</button><button class="btn theme-dot" data-theme-set="amber" title="Amber">A</button><button class="btn theme-dot" data-theme-set="shadow" title="Shadow">S</button></div>
+      <button id="exportBtn" class="btn primary">⬇ Export config</button>
+    </div>
+  </aside>
+  <div class="main">
+    <section class="hero" id="dashboard">
+      <div class="hero-card">
+        <h3>SYSTEM LIVE</h3>
+        <canvas id="spark" width="640" height="90"></canvas>
+        <div class="stat-grid">
+          <div><small>CPU</small><b id="cpuVal">—</b></div>
+          <div><small>GPU</small><b id="gpuVal">—</b></div>
+          <div><small>FANS</small><b id="fanVal">—</b></div>
+          <div><small>TEMP</small><b id="tempVal">—</b></div>
+        </div>
+      </div>
+    </section>
+    <section id="devices"><h2><span class="sec-idx">01</span>Devices</h2><div class="cards" id="deviceCards"></div></section>
+    <section id="lighting"><h2><span class="sec-idx">02</span>Lighting — <em>Forge Glow</em></h2>
+      <div class="panel2">
+        <div class="light-preview" id="lightPreview"></div>
+        <div class="light-ctrl">
+          <label>Color <input type="color" id="rgbPick" value="#ff0033"></label>
+          <label>Effect <select id="fx"><option>Static</option><option>Breathing</option><option>Strobing</option><option>Rainbow</option><option>Wave</option></select></label>
+          <label>Brightness <input type="range" id="bright" min="10" max="100" value="90"></label>
+          <div class="row"><button class="btn primary" id="applyFx">Apply to all</button><button class="btn" id="syncBtn">Sync devices</button></div>
+        </div>
+      </div>
+    </section>
+    <section id="fans"><h2><span class="sec-idx">03</span>Fans</h2>
+      <div class="panel2">
+        <div class="fan-modes"><button class="btn mode active">Silent</button><button class="btn mode">Balanced</button><button class="btn mode">Turbo</button><button class="btn mode">Manual</button></div>
+        <div id="fanSliders"></div><canvas id="curve" width="640" height="160"></canvas>
+      </div>
+    </section>
+    <section id="library"><h2><span class="sec-idx">04</span>Game Library</h2><div class="cards" id="gameCards"></div></section>
+    <section id="scenarios"><h2><span class="sec-idx">05</span>Scenario <em>Profiles</em></h2>
+      <div class="panel2">
+        <p class="sec-sub">One click retunes the whole rig for the moment. Each scenario sets fans + glow together.</p>
+        <div class="cards" id="scenarioCards"></div>
+      </div>
+    </section>
+    <section id="updates"><h2><span class="sec-idx">06</span>Update <em>Center</em></h2>
+      <div class="panel2"><div id="updateList"></div></div>
+    </section>
+    <footer><div>Forge Control • hand-built • v1.0</div><div class="fine">Independent project. Not affiliated with ASUS, ROG, or Armoury Crate.</div></footer>
+  </div>
+</div>
+<div id="toast"></div>
+<script src="renderer.js"></script>
+</body>
+</html>

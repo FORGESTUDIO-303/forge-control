@@ -1,2 +1,6 @@
-api/node_modules/
-api/.env
+node_modules/
+dist/
+bin/
+out/
+__pycache__/
+.env

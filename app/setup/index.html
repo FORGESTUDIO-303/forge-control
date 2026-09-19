@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Forge Control Setup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span class="logo-mark">F</span><div><b>FORGE CONTROL</b><small>Setup v1.0.0</small></div></div>
+  <div class="steps"><span class="on" data-s="0">Welcome</span><span data-s="1">License</span><span data-s="2">Location</span><span data-s="3">Install</span><span data-s="4">Finish</span></div>
+
+  <div class="page on" id="p0">
+    <h1>Total PC Control.<br>One Interface.</h1>
+    <p>This wizard installs Forge Control — devices, Forge Glow, fan curves, library, scenarios. Free forever, MIT licensed.</p>
+    <button class="btn primary big" data-go="1">Install →</button>
+  </div>
+
+  <div class="page" id="p1">
+    <h1>License</h1>
+    <div class="license">MIT License © 2026 Forge Control. Free to use, copy, modify and share. Provided as-is, no warranty. Full text ships in LICENSE with the app.</div>
+    <label class="check"><input type="checkbox" id="agree"> I accept the MIT License</label>
+    <div class="row"><button class="btn" data-go="0">← Back</button><button class="btn primary" id="toLoc" disabled>Next →</button></div>
+  </div>
+
+  <div class="page" id="p2">
+    <h1>Where to install?</h1>
+    <div class="row loc"><input id="loc" readonly><button class="btn" id="browse">Browse…</button></div>
+    <label class="check"><input type="checkbox" id="desk" checked> Desktop shortcut</label>
+    <div class="row"><button class="btn" data-go="1">← Back</button><button class="btn primary" id="doInstall">Install</button></div>
+  </div>
+
+  <div class="page" id="p3">
+    <h1>Installing…</h1>
+    <div class="bar"><div id="fill"></div></div>
+    <p id="phase">Copying files…</p>
+  </div>
+
+  <div class="page" id="p4">
+    <h1>Done ✓</h1>
+    <p>Forge Control is installed. Launch it now or find it in Start.</p>
+    <div class="row"><button class="btn primary big" id="finish">Launch Forge Control</button></div>
+  </div>
+</div>
+<script src="wizard.js"></script>
+</body>
+</html>

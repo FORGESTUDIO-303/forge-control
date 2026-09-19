@@ -1,0 +1,26 @@
+:root{--bg:#08080d;--panel:#14141c;--red:#ff0033;--txt:#f4f1e9;--dim:#a09a8d;--line:#2b2b3a}
+*{box-sizing:border-box;font-family:'Inter','Segoe UI',sans-serif}
+body{margin:0;background:radial-gradient(700px 380px at 50% -10%,rgba(255,0,51,.16),transparent 60%),var(--bg);color:var(--txt);height:100vh;display:flex;align-items:center;justify-content:center}
+.wrap{width:600px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:30px 34px;box-shadow:0 0 60px rgba(255,0,51,.15)}
+.brand{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.brand small{color:var(--dim);display:block}
+.logo-mark{width:40px;height:40px;background:linear-gradient(135deg,var(--red),#b30025);border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:22px}
+.steps{display:flex;gap:6px;margin-bottom:20px}
+.steps span{flex:1;text-align:center;font-size:11px;letter-spacing:1px;color:var(--dim);padding:7px 0;border-bottom:2px solid var(--line);text-transform:uppercase}
+.steps span.on{color:#fff;border-color:var(--red)}
+.page{display:none;animation:fadeUp .35s ease}
+.page.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h1{font-family:'Chakra Petch',sans-serif;font-size:30px;margin:0 0 10px}
+p{color:var(--dim);line-height:1.6}
+.btn{background:#1c1c29;color:var(--txt);border:1px solid var(--line);border-radius:9px;padding:11px 20px;cursor:pointer;font-weight:600;font-size:14px}
+.btn.primary{background:linear-gradient(135deg,var(--red),#b30025);border:0;color:#fff}
+.btn.big{font-size:15px;padding:13px 26px}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:10px;margin-top:16px}
+.license{background:#0b0b10;border:1px solid var(--line);border-radius:9px;padding:14px;font-size:13px;color:var(--dim);line-height:1.6;max-height:150px;overflow:auto}
+.check{display:flex;gap:9px;align-items:center;margin-top:14px;cursor:pointer}
+.check input{accent-color:var(--red);width:16px;height:16px}
+.loc input{flex:1;background:#0b0b10;border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:11px 13px}
+.bar{height:14px;background:#0b0b10;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:14px 0}
+#fill{height:100%;width:5%;background:linear-gradient(90deg,var(--red),#ff4d6a);border-radius:8px;transition:width .4s}

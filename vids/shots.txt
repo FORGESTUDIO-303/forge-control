@@ -1,0 +1,13 @@
+FORGE CONTROL - ZERO BUDGET SHORTS PLAN
+Run: python A:\forge-vids\build.py  ->  out\forge-short-1.mp4 (1080x1920, 15s, silent)
+
+5 SHOTS (auto-built above, post in this order through the week):
+1 HOOK: "Total PC Control. One Interface." - caption: POV your whole rig obeys one app
+2 GLOW: "5 lighting presets. Whole rig, one click." - caption: rate this glow 1-10
+3 FANS: "Silent to Turbo. Tuned in seconds." - caption: silent PC gang where you at
+4 PROFILES: "Per-title setups. Auto-apply on launch." - caption: settings change when the game starts?!
+5 CTA: "Free forever. Link in bio." - caption: free app, link in bio
+
+POSTING: TikTok + Shorts + Reels, 1/day, 7-9pm local. Hashtags: #pcsetup #pcgaming #rgbpc #techtok #freeapp
+PIN comment with GitHub link on every post. Reply to every comment day 1-7.
+NEXT LEVEL (still free): duet setup-tours, before/after glow clips, comment-reply vids.
