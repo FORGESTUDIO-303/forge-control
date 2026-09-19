@@ -325,10 +325,30 @@ async function renderRealFans() {
 }
 
 document.getElementById('exportBtn').onclick = () => {
-  const data = { app: 'Forge Control v1.0', exported: new Date().toISOString(), devices, fans, color: document.getElementById('rgbPick').value, effect: document.getElementById('fx').value };
+  const data = { app: 'Forge Control v1.2', exported: new Date().toISOString(), devices, fans, color: document.getElementById('rgbPick').value, effect: document.getElementById('fx').value };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'forge-control-config.json'; a.click();
   toast('Config exported ✓');
+};
+document.getElementById('importBtn').onclick = () => {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = '.json,application/json';
+  inp.onchange = () => {
+    const f = inp.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        const d = JSON.parse(r.result);
+        if (Array.isArray(d.fans) && d.fans.length) { fans = d.fans.slice(0, 8); renderFans(); drawCurve(); updateLive(); }
+        if (d.color) document.getElementById('rgbPick').value = d.color;
+        if (d.effect && [...document.getElementById('fx').options].some(o => o.text === d.effect)) document.getElementById('fx').value = d.effect;
+        applyLight();
+        toast('Config imported ✓');
+      } catch { toast('Bad config file'); }
+    };
+    r.readAsText(f);
+  };
+  inp.click();
 };
 
 // reveal + nav spy
