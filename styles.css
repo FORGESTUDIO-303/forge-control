@@ -128,9 +128,11 @@ footer{margin:30px 0 10px;color:var(--dim);font-size:12px;text-align:center}
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .tags span{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--line);border-radius:14px;padding:3px 9px;color:var(--gold);background:rgba(212,175,55,.07)}
 .sub-h{font-size:14px;letter-spacing:2px;color:var(--gold);margin:22px 0 10px;text-transform:uppercase}
-.dltable{border:1px solid var(--line);border-radius:13px;overflow:hidden}
-.dlrow{display:grid;grid-template-columns:1.6fr .7fr .6fr auto;gap:10px;align-items:center;padding:14px 16px;background:var(--panel);border-top:1px solid var(--line);animation:fadeUp .4s ease both}
-.dlrow:first-child{border-top:0}
+.dltable{border:1px solid var(--line);border-radius:13px;overflow:hidden;display:grid;grid-template-columns:1.6fr .7fr .6fr auto}
+.dlrow{display:contents}
+.dlrow>span{padding:14px 16px;background:var(--panel);border-top:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+.dlrow:first-child>span,.dlrow.dlhead>span{border-top:0}
+.dlrow:last-child>span{border-bottom:0}
 .dlhead{background:var(--panel2);color:var(--dim);font-size:11px;letter-spacing:2px;text-transform:uppercase}
 .dlrow small{display:block;color:var(--dim);font-weight:400}
 .steps{display:grid;gap:11px}
@@ -157,4 +159,4 @@ footer{margin:30px 0 10px;color:var(--dim);font-size:12px;text-align:center}
 .jumprow a{border:1px solid var(--line);border-radius:18px;padding:6px 14px;color:var(--gold);text-decoration:none;font-size:12px;letter-spacing:1px;background:var(--panel);transition:.2s}
 .jumprow a:hover{border-color:var(--red);color:#fff;transform:translateY(-2px)}
 .step{scroll-margin-top:90px}
-@media(max-width:900px){.nav-links{display:none}.modstrip{grid-template-columns:1fr 1fr}.cards.six{grid-template-columns:1fr}.dlrow{grid-template-columns:1fr auto}.dlhead{display:none}.top-search{left:22px}.top-search input{width:100%}}
+@media(max-width:900px){.nav-links{display:none}.modstrip{grid-template-columns:1fr 1fr}.cards.six{grid-template-columns:1fr}.dltable{grid-template-columns:1fr auto}.dlrow.dlhead>span{display:none}.dlrow>span:nth-child(2),.dlrow>span:nth-child(3){display:none}.top-search{left:22px}.top-search input{width:100%}}
