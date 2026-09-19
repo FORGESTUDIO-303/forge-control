@@ -48,8 +48,9 @@
       <div class="panel2">
         <div class="light-preview" id="lightPreview"></div>
         <div class="light-ctrl">
-          <label>Color <input type="color" id="rgbPick" value="#ff0033"></label>
-          <label>Effect <select id="fx"><option>Static</option><option>Breathing</option><option>Strobing</option><option>Rainbow</option><option>Wave</option></select></label>
+          <label>Layer A <input type="color" id="rgbPick" value="#ff0033"></label>
+          <label>Layer B <input type="color" id="rgbPickB" value="#7c5cff"></label>
+          <label>Effect <select id="fx"><option>Static</option><option>Breathing</option><option>Strobing</option><option>Rainbow</option><option>Wave</option><option>Blend A→B</option><option>Split A|B</option></select></label>
           <label>Brightness <input type="range" id="bright" min="10" max="100" value="90"></label>
           <div class="row"><button class="btn primary" id="applyFx">Apply to all</button><button class="btn" id="syncBtn">Sync devices</button></div>
         </div>

@@ -87,6 +87,7 @@ section h2 em{font-style:normal;color:var(--red2)}
 .light-ctrl input[type=color]{width:64px;height:38px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);cursor:pointer}
 .light-ctrl select{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:9px}
 .light-ctrl input[type=range]{accent-color:var(--red);cursor:pointer}
+.card select.gmode{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:6px;padding:4px 6px}
 .row{display:flex;gap:8px;flex-wrap:wrap}
 .fan-modes{display:flex;gap:8px;margin-bottom:13px;flex-wrap:wrap}
 .fan-modes .active{border-color:var(--red);color:#fff;box-shadow:var(--glow)}

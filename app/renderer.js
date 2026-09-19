@@ -90,11 +90,25 @@ updates.forEach((u) => {
   ul.appendChild(row);
 });
 const gc = document.getElementById('gameCards');
+let gameModes = {};
+try { gameModes = JSON.parse(localStorage.getItem('forge-games') || '{}'); } catch {}
+const MODES = ['Silent', 'Balanced', 'Turbo'];
 games.forEach((g, i) => {
-  const c = el(`<div class="card reveal" style="transition-delay:${i * 0.05}s"><h4>${g}</h4><small>Ready to play • optimized profile</small><div class="row" style="margin-top:8px"><button class="btn primary">Launch</button><button class="btn">Optimize</button></div></div>`);
+  const c = el(`<div class="card reveal" style="transition-delay:${i * 0.05}s"><h4>${g}</h4><small>Mode: <select class="gmode">${MODES.map(m => `<option${(gameModes[g] || 'Balanced') === m ? ' selected' : ''}>${m}</option>`).join('')}</select></small><div class="row" style="margin-top:8px"><button class="btn primary">Launch</button><button class="btn">Optimize</button></div></div>`);
   const [l, o] = c.querySelectorAll('button');
-  l.onclick = () => toast('Launching ' + g + '…');
+  l.onclick = () => {
+    const m = c.querySelector('.gmode').value;
+    const preset = { Silent: 25, Balanced: 45, Turbo: 85 }[m];
+    fans.forEach(f => f.v = Math.min(100, preset + Math.random() * 6));
+    renderFans(); drawCurve(); updateLive();
+    toast(`Launching ${g} in ${m} mode…`);
+  };
   o.onclick = () => toast(g + ' optimized ✓');
+  c.querySelector('.gmode').onchange = e => {
+    gameModes[g] = e.target.value;
+    try { localStorage.setItem('forge-games', JSON.stringify(gameModes)); } catch {}
+    toast(`${g} → ${e.target.value} profile saved`);
+  };
   gc.appendChild(c);
 });
 
@@ -117,16 +131,31 @@ document.querySelectorAll('.fan-modes .mode').forEach(b => b.onclick = () => {
   toast(b.textContent + ' profile applied');
 });
 
-// lighting
+// lighting - two-layer glow creator
 const prev = document.getElementById('lightPreview');
 function applyLight() {
-  const c = document.getElementById('rgbPick').value, fx = document.getElementById('fx').value, br = document.getElementById('bright').value;
+  const a = document.getElementById('rgbPick').value,
+        b = document.getElementById('rgbPickB').value,
+        fx = document.getElementById('fx').value,
+        br = document.getElementById('bright').value;
   prev.style.opacity = br / 100;
   if (fx === 'Rainbow') prev.style.background = 'linear-gradient(90deg,red,orange,yellow,green,blue,violet)';
-  else if (fx === 'Wave') prev.style.background = `repeating-linear-gradient(90deg,${c} 0 20px,#111 20px 40px)`;
-  else prev.style.background = c;
-  prev.style.boxShadow = `0 0 34px ${c}`;
+  else if (fx === 'Wave') prev.style.background = `repeating-linear-gradient(90deg,${a} 0 20px,#111 20px 40px)`;
+  else if (fx === 'Blend A→B') prev.style.background = `linear-gradient(90deg,${a},${b})`;
+  else if (fx === 'Split A|B') prev.style.background = `linear-gradient(90deg,${a} 50%,${b} 50%)`;
+  else prev.style.background = a;
+  prev.style.boxShadow = `0 0 34px ${a}, 0 0 60px ${b}55`;
+  try { localStorage.setItem('forge-glow', JSON.stringify({ a, b, fx, br })); } catch {}
 }
+try {
+  const g = JSON.parse(localStorage.getItem('forge-glow') || 'null');
+  if (g) {
+    document.getElementById('rgbPick').value = g.a;
+    document.getElementById('rgbPickB').value = g.b || '#7c5cff';
+    if ([...document.getElementById('fx').options].some(o => o.text === g.fx)) document.getElementById('fx').value = g.fx;
+    document.getElementById('bright').value = g.br || 90;
+  }
+} catch {}
 document.getElementById('applyFx').onclick = async () => {
   applyLight();
   const res = await applyGlowToHardware();
@@ -136,7 +165,7 @@ document.getElementById('syncBtn').onclick = async () => {
   const n = await rescanHardware();
   toast(n > 0 ? `Forge Glow synced to ${n} real device(s) ✓` : 'No OpenRGB devices — start its Server tab');
 };
-['rgbPick', 'fx', 'bright'].forEach(id => document.getElementById(id).oninput = applyLight);
+['rgbPick', 'rgbPickB', 'fx', 'bright'].forEach(id => document.getElementById(id).oninput = applyLight);
 
 // live stats - real telemetry first, animated fallback
 const spark = document.getElementById('spark').getContext('2d');
@@ -161,7 +190,7 @@ async function applyGlowToHardware() {
   if (!hwDevices.length) return false;
   const c = hexRgb(document.getElementById('rgbPick').value);
   const fx = document.getElementById('fx').value;
-  const mode = (fx === 'Static' || fx === 'Breathing' || fx === 'Strobing') ? 'Direct' : fx;
+  const mode = ['Static', 'Breathing', 'Strobing', 'Rainbow', 'Wave', 'Direct'].includes(fx) ? (fx === 'Static' ? 'Direct' : fx) : 'Direct';
   let ok = 0;
   for (let i = 0; i < hwDevices.length; i++) {
     try { const r = await window.forge.rgbSet({ dev: i, mode, ...c }); if (r && r.ok) ok++; } catch {}
