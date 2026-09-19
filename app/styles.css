@@ -24,6 +24,8 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:radial-grad
 .sidebar nav a:hover{background:var(--panel2);transform:translateX(4px)}
 .sidebar nav a.active{background:linear-gradient(90deg,rgba(255,0,51,.22),transparent);border-left-color:var(--red)}
 .side-foot{margin-top:auto;display:flex;flex-direction:column;gap:9px}
+.side-foot input{background:#0b0b10;border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:10px 12px}
+.side-foot input:focus{outline:none;border-color:var(--red)}
 .ver{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:6px}
 .ver .live-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:blink 1.4s infinite}
 .ver.on .live-dot{background:var(--green)}

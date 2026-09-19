@@ -24,11 +24,24 @@ document.getElementById('menuBtn').onclick = () => side.classList.toggle('open')
 
 // devices
 const dc = document.getElementById('deviceCards');
-devices.forEach((d, i) => {
-  const card = el(`<div class="card" style="animation-delay:${i * 0.06}s"><h4><span class="dot" style="background:${d.on ? '#2fbf71' : '#555'};box-shadow:none"></span>${d.name}</h4><small>${d.detail}</small><div class="tags">${d.caps.map(c => `<span>${c}</span>`).join('')}</div><div class="row" style="margin-top:8px"><button class="btn">Configure</button></div></div>`);
-  card.querySelector('button').onclick = () => toast(d.name + ': ' + d.caps.join(' • '));
-  dc.appendChild(card);
-});
+function renderDevices(list) {
+  dc.innerHTML = '';
+  list.forEach((d, i) => {
+    const card = el(`<div class="card" style="animation-delay:${i * 0.06}s"><h4><span class="dot" style="background:${d.on ? '#2fbf71' : '#555'};box-shadow:none"></span>${d.name}</h4><small>${d.detail}</small><div class="tags">${d.caps.map(c => `<span>${c}</span>`).join('')}</div><div class="row" style="margin-top:8px"><button class="btn">Configure</button></div></div>`);
+    card.querySelector('button').onclick = () => toast(d.name + ': ' + d.caps.join(' • '));
+    dc.appendChild(card);
+  });
+}
+renderDevices(devices);
+
+// search
+document.getElementById('search').oninput = e => {
+  const q = e.target.value.toLowerCase();
+  renderDevices(devices.filter(d => (d.name + ' ' + d.detail + ' ' + d.caps.join(' ')).toLowerCase().includes(q)));
+  document.querySelectorAll('#gameCards .card').forEach(c => {
+    c.style.display = c.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+};
 
 // themes - re-skin, remembered
 try {

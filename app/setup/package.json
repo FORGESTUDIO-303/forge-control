@@ -1,6 +1,6 @@
 {
   "name": "forge-setup",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Forge Control setup wizard - our own installer",
   "main": "main.js",
   "scripts": {
