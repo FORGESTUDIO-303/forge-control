@@ -127,19 +127,60 @@ function applyLight() {
   else prev.style.background = c;
   prev.style.boxShadow = `0 0 34px ${c}`;
 }
-document.getElementById('applyFx').onclick = () => { applyLight(); toast('Lighting applied to all devices'); };
-document.getElementById('syncBtn').onclick = () => toast('Forge Glow synced ✓');
+document.getElementById('applyFx').onclick = async () => {
+  applyLight();
+  const res = await applyGlowToHardware();
+  toast(res ? 'Lighting applied to real devices ✓' : 'Preview updated (OpenRGB offline)');
+};
+document.getElementById('syncBtn').onclick = async () => {
+  const n = await rescanHardware();
+  toast(n > 0 ? `Forge Glow synced to ${n} real device(s) ✓` : 'No OpenRGB devices — start its Server tab');
+};
 ['rgbPick', 'fx', 'bright'].forEach(id => document.getElementById(id).oninput = applyLight);
 
-// live stats
+// live stats - real telemetry first, animated fallback
 const spark = document.getElementById('spark').getContext('2d');
 let hist = Array(40).fill(20);
+let realStats = null;
+setInterval(async () => {
+  try { const s = await window.forge.stats(); if (!s.error) realStats = s; } catch {}
+}, 5000);
+function hexRgb(h) {
+  const n = parseInt(h.slice(1), 16);
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+let hwDevices = [];
+async function rescanHardware() {
+  try {
+    const r = await window.forge.rgbList();
+    if (Array.isArray(r)) { hwDevices = r; renderHwRow(); return r.length; }
+  } catch {}
+  hwDevices = []; renderHwRow(); return 0;
+}
+async function applyGlowToHardware() {
+  if (!hwDevices.length) return false;
+  const c = hexRgb(document.getElementById('rgbPick').value);
+  const fx = document.getElementById('fx').value;
+  const mode = (fx === 'Static' || fx === 'Breathing' || fx === 'Strobing') ? 'Direct' : fx;
+  let ok = 0;
+  for (let i = 0; i < hwDevices.length; i++) {
+    try { const r = await window.forge.rgbSet({ dev: i, mode, ...c }); if (r && r.ok) ok++; } catch {}
+  }
+  return ok > 0;
+}
 function updateLive() {
-  const cpu = 25 + Math.random() * 40, gpu = 30 + Math.random() * 45;
+  let cpu, gpu, temp;
+  if (realStats && realStats.cpuLoad != null) {
+    cpu = realStats.cpuLoad;
+    gpu = (realStats.gpus[0] && realStats.gpus[0].temp != null) ? realStats.gpus[0].temp : 30 + Math.random() * 45;
+    temp = realStats.cpuTemp != null ? realStats.cpuTemp : 45 + Math.random() * 20;
+  } else {
+    cpu = 25 + Math.random() * 40; gpu = 30 + Math.random() * 45; temp = 45 + Math.random() * 20;
+  }
   document.getElementById('cpuVal').textContent = cpu.toFixed(0) + '%';
   document.getElementById('gpuVal').textContent = gpu.toFixed(0) + '%';
   document.getElementById('fanVal').textContent = Math.round(fans.reduce((a, f) => a + f.v, 0) / fans.length) + '%';
-  document.getElementById('tempVal').textContent = (45 + Math.random() * 20).toFixed(0) + '°C';
+  document.getElementById('tempVal').textContent = temp.toFixed(0) + '°C';
   hist.push(cpu); hist.shift();
   spark.clearRect(0, 0, 640, 90);
   const g = spark.createLinearGradient(0, 0, 640, 0);
@@ -154,7 +195,41 @@ function drawCurve() {
   fans.forEach((f, i) => c.lineTo(80 + i * 150, 140 - f.v * 1.2)); c.stroke();
 }
 
-// export
+// open-source tools row
+function toolCard(title, statusHtml, btns) {
+  const c = el(`<div class="card"><h4>${title}</h4><small>${statusHtml}</small><div class="row" style="margin-top:8px"></div></div>`);
+  const row = c.querySelector('.row');
+  btns.forEach(([label, fn, primary]) => {
+    const b = el(`<button class="btn${primary ? ' primary' : ''}">${label}</button>`);
+    b.onclick = fn; row.appendChild(b);
+  });
+  return c;
+}
+async function renderHwRow() {}
+async function renderTools() {
+  const w = document.getElementById('toolCards'); if (!w) return;
+  w.innerHTML = '';
+  // OpenRGB
+  let rgbN = hwDevices.length, rgbBtns;
+  if (rgbN > 0) {
+    rgbBtns = [['Rescan', async () => { await rescanHardware(); renderTools(); }]];
+  } else {
+    rgbBtns = [
+      ['Rescan', async () => { await rescanHardware(); renderTools(); }],
+      ['Get OpenRGB', () => window.forge.openUrl('https://openrgb.org')],
+    ];
+  }
+  w.appendChild(toolCard('OpenRGB', rgbN > 0 ? `● ${rgbN} device(s) live` : '○ Server offline — start it in OpenRGB > Server tab', rgbBtns));
+  // Telemetry
+  w.appendChild(toolCard('Telemetry', realStats ? `● Live: CPU ${Math.round(realStats.cpuLoad || 0)}%` : '○ Animated estimates (admin unlocks real temps)', [['Refresh', async () => { try { const s = await window.forge.stats(); if (!s.error) realStats = s; } catch {} renderTools(); }]]));
+  // FanControl
+  try {
+    const fc = await window.forge.fancontrol('status');
+    w.appendChild(toolCard('FanControl', fc.installed ? '● Installed' : '○ Not found', fc.installed
+      ? [['Launch', async () => { await window.forge.fancontrol('launch'); toast('FanControl launched'); }]]
+      : [['Get FanControl', () => window.forge.openUrl('https://github.com/Rem0o/FanControl.Releases')]]));
+  } catch {}
+}
 document.getElementById('exportBtn').onclick = () => {
   const data = { app: 'Forge Control v1.0', exported: new Date().toISOString(), devices, fans, color: document.getElementById('rgbPick').value, effect: document.getElementById('fx').value };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -175,3 +250,5 @@ links.forEach(a => a.addEventListener('click', () => side.classList.remove('open
 
 setInterval(updateLive, 1200);
 renderFans(); applyLight(); drawCurve(); updateLive();
+rescanHardware().then(() => renderTools());
+renderTools();

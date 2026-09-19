@@ -10,7 +10,9 @@
   "build": {
     "appId": "com.forgestudio.forgecontrol",
     "productName": "Forge Control",
-    "directories": { "output": "dist" },
+    "directories": {
+      "output": "dist"
+    },
     "files": [
       "main.js",
       "preload.js",
@@ -20,7 +22,11 @@
       "run.bat",
       "package.json"
     ],
-    "win": { "target": ["nsis"] },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
     "nsis": {
       "oneClick": false,
       "perMachine": false,
@@ -36,5 +42,8 @@
   },
   "allowScripts": {
     "electron@33.4.11": true
+  },
+  "dependencies": {
+    "systeminformation": "^5.33.12"
   }
 }
